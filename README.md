@@ -1,15 +1,21 @@
-# Final Project
+# Anti-Vibe Coding
 
-This repo uses [AI-DLC](https://github.com/awslabs/aidlc-workflows) with Claude Code. The workflow's skills, agents and hooks are committed under `.claude/`, and the shared project method is under `aidlc/spaces/`.
+An interactive learning sidecar for AI coding agents. See
+[`docs/founding-idea.md`](docs/founding-idea.md) for the concept and
+[`docs/assignment-requirements.md`](docs/assignment-requirements.md) for the
+course requirements.
 
-## Collaborator setup
+> TODO for the milestone: team names and NetIDs, the 4–6 overview paragraphs
+> (problem and LLM rationale, LLM integration plan, scope and feasibility), and
+> the collaboration plan.
 
-1. Install the AI-DLC CLI once per machine (the hooks run through it):
-   ```
-   curl -fsSL https://github.com/awslabs/aidlc-workflows/releases/latest/download/install.sh | sh
-   ```
-   Make sure `~/.local/bin` is on your PATH.
-2. Clone this repo and open Claude Code in it. Approve the project hooks when prompted.
-3. Run `/aidlc --doctor` to check the setup.
+## AI-DLC setup
 
-Project notes and rules that every AI tool reads live in `aidlc/spaces/default/memory/project.md`. Personal overrides go in `.claude/settings.local.json` (gitignored; copy the `.example`).
+- **Coding agent:** Claude Code
+- **AI-DLC version:** v1.0.1 ([release](https://github.com/awslabs/aidlc-workflows/releases/tag/v1.0.1))
+- **Rules:** `CLAUDE.md` is an unmodified copy of `core-workflow.md`, and the rule details are in `.aidlc-rule-details/`. Project context for the agent is in `.claude/CLAUDE.md`.
+- **Artifacts:** AI-DLC writes everything to `aidlc-docs/`, including the `audit.md` and `aidlc-state.md` record.
+
+To start, open Claude Code in this repo and begin a prompt with
+"Using AI-DLC, …". The agent should show the AI-DLC welcome message and
+create `aidlc-docs/`.
