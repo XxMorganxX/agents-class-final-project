@@ -1,5 +1,10 @@
 @.claude/rules/aidlc.md
 
+# Project Context — read first
+
+- **Requirements:** [`docs/assignment-requirements.md`](../docs/assignment-requirements.md) holds the class assignment's deliverables, deadlines, constraints and rubric. Treat it as the hard requirements for this repo. The Canvas page it cites is authoritative.
+- **Core idea:** [`docs/founding-idea.md`](../docs/founding-idea.md) describes Anti-Vibe Coding, a learning sidecar ("Pi") that runs beside Claude Code ("the Builder"). It is the high-level concept. Details may evolve through the AI-DLC workflow, but keep the vision and principles unless the team explicitly changes them.
+
 <!--
   The @-line above pulls the AIDLC method into Claude's ambient context. It is
   the first hop of a reference chain: CLAUDE.md imports @.claude/rules/aidlc.md,
