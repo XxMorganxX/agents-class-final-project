@@ -13,7 +13,7 @@ Status key: ✅ done · 🟡 started, gaps remain · ⬜ not started
 | 3 | README: overview (problem and LLM rationale, LLM integration, scope) | [`README.md`](../README.md) | A | ✅ pending team review |
 | 4 | README: collaboration plan | [`README.md`](../README.md) | E | ✅ |
 | 5 | Vision document | [`founding-idea.md`](founding-idea.md) | B | ✅ pending team review |
-| 6 | Technical environment document | `docs/technical-environment.md` (planned) | B | ⬜ |
+| 6 | Technical environment document | [`technical-environment.md`](technical-environment.md) | B | 🟡 draft, pending team review |
 | 7 | Inception artifacts | `aidlc-docs/inception/` | D | ⬜ |
 | 8 | AI-DLC record | `aidlc-docs/audit.md`, `aidlc-docs/aidlc-state.md` | C | ⬜ |
 
