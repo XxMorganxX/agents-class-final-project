@@ -22,7 +22,7 @@ Our proposed demo follows the first phase of the founding idea. We plan to run o
 
 We propose meeting twice a week on Zoom and using GitHub Issues between meetings to assign work, raise questions, and record decisions. We’ll devote the first meeting to the problem, intended users, and the scope we can deliver by December 16. During Inception, one teammate will operate Claude Code for the shared workflow while all five discuss its questions and review each document before approval. For Construction, we’ll divide the work into session integration, question generation, answer evaluation and learning records, the user interface, and testing the demo. Each task will have an owner and a second teammate to review it.
 
-See the [founding idea](docs/founding-idea.md) and the [course requirements](docs/assignment-requirements.md).
+See the [founding idea](docs/founding-idea.md) and the [course requirements](docs/assignment-requirements.md). The [milestone map](docs/mid-semester-milestone.md) lists every milestone deliverable with its location and status.
 
 ## AI-DLC setup
 

@@ -21,6 +21,10 @@ Rather than replacing AI-assisted development, we want to make it a mechanism fo
 
 **Core principle: The developer should become more technically capable with every coding session, not more dependent on the agent.**
 
+### Target users
+
+Our primary users are **students learning to code with AI coding agents**: for example, computer science students who use Claude Code for coursework and personal projects. These students are still building the fundamentals that an agent lets them skip. They are the most likely to ship code they can't explain, and they gain the most from turning each session into practice. "Developer" in this document means this student user unless stated otherwise.
+
 ## 2. The Problem
 
 Traditional software development naturally required developers to understand much of the code they produced. AI coding agents weaken this relationship.
@@ -400,32 +404,56 @@ The system should not infer mastery from a single correct multiple-choice answer
 
 ## 10. MVP Scope
 
-The first version should validate whether continuous, implementation-specific learning creates measurable improvement in developer understanding.
+The MVP is what we will build for the course's Final Project, due December 16, 2026. Where earlier sections describe the long-term product, this section sets what is actually in scope.
 
-**Phase 1 — Functional Sidecar**
+**MVP statement:** Pi is a coding sidecar that runs beside Claude Code and talks to it in both directions. Its job is to check that the developer understands the code being built. Pi is a dynamic UI that explains code while Claude writes and runs it, and it tests understanding with several interaction types. Pi stays cheap, and Claude Code does the hard technical reasoning.
 
-- Connect one Pi session to one Claude Code session.
-- Ingest meaningful code and task updates.
-- Generate contextual multiple-choice questions.
-- Support short responses.
-- Evaluate answers and offer targeted explanations.
-- Maintain lightweight learning state.
+### In scope
 
-**Phase 2 — Adaptive Education**
+- **One Pi session paired with one Claude Code session**, with two-way communication:
+  - Claude → Pi: the task, changed files and functions, key decisions, and test results.
+  - Pi → Claude: requests for explanations, answer verification, and concept identification.
+- **Live code explanations** grounded in the actual implementation while Claude works (§3A).
+- **Multiple-choice quizzes** generated from the current code (§3B).
+- **Short-response and teach-back exercises**, graded on understanding rather than exact wording (§3C).
+- **Generated explanation videos**, using our existing video generation engine to explain important concepts as the code is built (§3D). Videos are generated asynchronously so the coding session isn't blocked.
+- **Quick-time events**, such as predicting execution, spotting a bug, choosing an architecture, or predicting output (§3E).
+- **Pseudocode and system design exercises**, with feedback on correctness, assumptions and missed edge cases (§3F).
+- **Drill-down on wrong answers.** When the developer answers wrong, Pi asks focused follow-up questions on the same concept to find the misconception, then retests with a new example (§4).
+- **Session-scoped learning state.** Pi records which concepts came up and how the developer answered during the current session.
+- **Cost-conscious design.** Pi uses inexpensive models and deterministic logic, and escalates hard reasoning to Claude Code (§8).
 
-- Track concept-level mastery.
-- Diagnose misconceptions.
-- Add adaptive follow-up questions.
-- Generate visual explanations through the video engine.
-- Support code execution and output-prediction exercises.
+### Out of scope
 
-**Phase 3 — Advanced Learning Environment**
+- **Difficulty scaling.** Pi does not automatically raise or lower question difficulty based on the developer's track record. Drill-down stays at the level of the concept that was missed.
+- **Remediation videos tailored to misunderstanding.** Videos explain concepts as the code is built. In the MVP they are not generated in response to a specific wrong answer.
+- **Detailed models of the developer's prior education.** Pi does not build a long-term profile of what the developer already knows from earlier courses, jobs or projects. Learning state lasts for one session.
+- **Everything listed under Future versions below.**
 
-- Introduce dynamic UI components and quick-time events.
-- Support pseudocode and system design exercises.
-- Implement long-term knowledge tracking.
-- Add spaced review across projects.
-- Optimize educational interventions using measured learning outcomes.
+### Future versions
+
+These ideas fit the product but are left out of the MVP.
+
+**v2: Adaptive learning**
+
+- Difficulty scaling based on measured mastery.
+- Remediation videos tailored to the developer's specific misconception.
+- A persistent knowledge profile across sessions, as described in §4, with spaced review of concepts the developer struggled with.
+- A concept-mastery dashboard showing progress over time.
+- Caching and reuse of questions, explanations and videos when the underlying code hasn't changed (§8.5).
+- Before-and-after comprehension checks to measure learning gains (§11).
+- Configurable interruption levels (passive, interactive, deep learning) per session (§6).
+
+**v3: Learning platform**
+
+- A personalized curriculum based on the developer's prior education and experience.
+- Support for other coding agents besides Claude Code, such as Codex, Cursor and Copilot, behind a shared event interface.
+- An instructor or team-lead mode, where a course or team sets the concepts to cover and reviews learners' progress.
+- Sandboxed code-execution exercises, where the developer edits and runs code in isolation from the real codebase.
+- An onboarding mode that walks a new contributor through an existing codebase rather than new code.
+- A pull-request review mode that quizzes a reviewer on a teammate's changes before approval.
+- Voice-based teach-back exercises.
+- Intervention policies tuned from measured outcomes, deciding when and how to teach for the most learning per dollar.
 
 ## 11. Success Metrics
 
@@ -458,3 +486,10 @@ This would allow AI-assisted development to become a personalized, continuous so
 The ultimate goal is not to make developers write every line of code themselves.
 
 **It is to ensure that, even as agents write more of the code, the developers directing them continue to become better engineers.**
+
+## 13. Open Questions
+
+1. **Interface: web app or terminal?** Should Pi be a web app beside the terminal, or run inside the terminal next to Claude Code? A web app makes rich components such as videos, diagrams and code viewers easier. A terminal interface keeps the developer in one place.
+2. **Blocking the Builder:** Can we lock the Claude Code session and make it wait until the developer finishes a Pi session? If so, when should Pi block Claude, and when should learning run alongside it without blocking?
+3. **Pi–Claude communication:** How does communication between the agents actually work? This covers how Pi learns what Claude changed and how Pi sends questions back to Claude for verification or explanation.
+4. **Interaction types:** What is the full set of interaction types inside Pi? The MVP includes all of §3: explanations, multiple-choice questions, short-answer and teach-back exercises, videos, quick-time events, and pseudocode or system design exercises. Are there others, and how does each one appear in the UI?
