@@ -259,6 +259,8 @@ The communication layer should be asynchronous, with event-driven updates and ta
 
 The educational experience should be presented through a dynamic interface controlled by Pi.
 
+**Form factor (decided):** Pi runs as a desktop **Electron app**, a chat window that sits beside the terminal where Claude Code runs. The pi agent harness runs under the hood. The window is the only thing the student sees of Pi, and its design is tuned for learning: Pi asks questions, takes in the student's answers, plays videos, and shows exercises in one place. Readable code, a calm layout, clear feedback, and minimal chrome all serve that goal.
+
 The UI is not a static chat window. It adapts to the concept being taught and the form of interaction that would best test understanding.
 
 Potential interface components include:
@@ -416,7 +418,10 @@ The MVP is what we will build for the course's Final Project, due December 16, 2
 - **Live code explanations** grounded in the actual implementation while Claude works (§3A).
 - **Multiple-choice quizzes** generated from the current code (§3B).
 - **Short-response and teach-back exercises**, graded on understanding rather than exact wording (§3C).
-- **Generated explanation videos**, using our existing video generation engine to explain important concepts as the code is built (§3D). Videos are generated asynchronously so the coding session isn't blocked.
+- **Generated explanation videos**, using our existing video generation engine to explain important concepts as the code is built (§3D):
+  - **Optional, off by default.** The student turns videos on with a toggle in the Pi window. When they're off, Pi explains with text and diagrams instead.
+  - **Runs through the student's own Claude session.** The engine uses the Claude account the student is logged into with Claude Code, so video work counts against their Claude plan rather than Pi's budget.
+  - **Generated asynchronously,** so the coding session isn't blocked.
 - **Quick-time events**, such as predicting execution, spotting a bug, choosing an architecture, or predicting output (§3E).
 - **Pseudocode and system design exercises**, with feedback on correctness, assumptions and missed edge cases (§3F).
 - **Drill-down on wrong answers.** When the developer answers wrong, Pi asks focused follow-up questions on the same concept to find the misconception, then retests with a new example (§4).
@@ -489,7 +494,7 @@ The ultimate goal is not to make developers write every line of code themselves.
 
 ## 13. Open Questions
 
-1. **Interface: web app or terminal?** Should Pi be a web app beside the terminal, or run inside the terminal next to Claude Code? A web app makes rich components such as videos, diagrams and code viewers easier. A terminal interface keeps the developer in one place.
+1. **Interface (resolved):** Pi is an Electron desktop app with the pi harness underneath (§6). It was chosen over a terminal UI because videos, diagrams and code viewers need a rich interface. Still open: where the window sits relative to the terminal, and how Pi gets the student's attention without breaking their flow.
 2. **Blocking the Builder:** Can we lock the Claude Code session and make it wait until the developer finishes a Pi session? If so, when should Pi block Claude, and when should learning run alongside it without blocking?
 3. **Pi–Claude communication:** How does communication between the agents actually work? This covers how Pi learns what Claude changed and how Pi sends questions back to Claude for verification or explanation.
 4. **Interaction types:** What is the full set of interaction types inside Pi? The MVP includes all of §3: explanations, multiple-choice questions, short-answer and teach-back exercises, videos, quick-time events, and pseudocode or system design exercises. Are there others, and how does each one appear in the UI?

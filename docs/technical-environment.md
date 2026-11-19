@@ -4,26 +4,27 @@ This document gives AI-DLC the technical constraints for building Pi, the learni
 
 ## 1. System at a glance
 
-Three processes run on one laptop:
+Pi is one Electron desktop app running beside Claude Code on the same laptop:
 
 ```
-+------------------+   hook events (HTTP)    +--------------------------+
-|   Claude Code    | ----------------------> |        Pi sidecar        |
-|  (the Builder)   |                         |  Node service + pi agent |
-|  student's repo  | <---------------------- |  127.0.0.1:4780          |
-+------------------+  read-only `claude -p`  +--------------------------+
-                         questions                |              |
-                                       WebSocket  |              |  subprocess
-                                                  v              v
-                                     +----------------+  +------------------+
-                                     | Pi web UI      |  | make-video       |
-                                     | (browser tab)  |  | (Project-Feynman)|
-                                     +----------------+  +------------------+
++------------------+   hook events (HTTP)    +-------------------------------+
+|   Claude Code    | ----------------------> |  Pi app: Electron main        |
+|  (the Builder)   |                         |  - hook server 127.0.0.1:4780 |
+|  student's repo  | <---------------------- |  - pi agent harness (SDK)     |
++------------------+  read-only `claude -p`  |  - video job queue            |
+                         questions           +-------------------------------+
+                                                   |                 |
+                                    IPC via preload|                 | subprocess
+                                                   v                 v
+                                 +-------------------------+  +------------------+
+                                 | Pi app: renderer        |  | make-video       |
+                                 | chat window (React)     |  | (Project-Feynman)|
+                                 +-------------------------+  +------------------+
 ```
 
 - **Claude Code → Pi.** Claude Code [hooks](https://docs.claude.com/en/docs/claude-code/hooks) post a JSON event to Pi's local server after each file edit, when a turn ends, and when the student sends a prompt.
 - **Pi → Claude Code.** Pi asks the Builder questions through a separate, read-only headless call (`claude -p`) in the student's repo. It never types into the student's live session.
-- **Pi → student.** Pi pushes UI cards over a WebSocket to a local web page: explanations, quizzes, quick-time events, pseudocode exercises and videos.
+- **Pi → student.** The Electron main process runs the pi harness and sends UI cards to the chat window over Electron IPC: explanations, quizzes, quick-time events, pseudocode exercises and videos. The student's answers come back the same way.
 - **Pi → video engine.** Pi starts Project-Feynman's `make-video` CLI as a background subprocess and shows the MP4 when the render finishes.
 
 ## 2. Language, runtime, package manager and frameworks
@@ -36,9 +37,10 @@ Three processes run on one laptop:
 | Agent harness | [`@earendil-works/pi-coding-agent`](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) 1.4.0 (pinned) SDK | Gives Pi its agent loop, sessions, model runtime and custom tools (`pi.registerTool`). |
 | Model (Pi) | Claude Haiku 5.5 (`claude-haiku-5-5`) through pi's `anthropic` provider | Cheap and fast enough for question generation and grading. Swappable through pi's model runtime. |
 | Model (escalation) | Claude Code headless (`claude -p`), using the model on the student's Claude Code login | Hard reasoning goes to the Builder, as the founding idea requires (§5, §8). |
-| HTTP server | Fastify 5 with `@fastify/websocket` | Typed routes, schema validation and WebSocket in one small dependency. |
+| Desktop app | Electron (latest stable at project start, pinned exactly) with Electron Forge and its Vite plugin | Gives a dedicated chat window built for learning, with native video playback. Forge is Electron's official build tool. |
+| Hook server | Fastify 5, inside the Electron main process | Claude Code hooks need an HTTP endpoint. Fastify gives typed routes with schema validation. |
 | Schemas | TypeBox (the version the pi SDK uses) | One schema library for tool parameters, HTTP bodies and model JSON output. |
-| Web UI | React 19 with Vite 7 | Fast local dev server. Interaction cards are plain React components. |
+| Chat window UI | React 19 in the Electron renderer, bundled by Vite | Each interaction type is a React card in the chat stream. |
 | Video engine | Project-Feynman `make-video` (Python 3.14, uv, ManimGX). It runs as an external CLI and is not a dependency. | We already have it. See §4. |
 
 **Project layout.** Organized by feature:
@@ -47,14 +49,16 @@ Three processes run on one laptop:
 pi-sidecar/
   src/
     config.ts             every tunable value and every prompt (single source of truth)
-    server/               Fastify app: hook endpoint, WebSocket, static UI
+    main/                 Electron main process: window, app lifecycle, IPC handlers
+    preload/              contextBridge API: the only bridge between main and the window
+    server/               Fastify hook endpoint (runs in the main process)
     builder-events/       parse and filter Claude Code hook payloads
     tutor/                pi agent session, custom tools, intervention decisions
     exercises/            one folder per interaction type: generate + grade
     builder-bridge/       read-only `claude -p` calls to the Builder
     video/                make-video subprocess wrapper and job queue
     learning-state/       session-scoped concept records
-  ui/                     React app (cards per interaction type)
+  renderer/               React chat window (one card component per interaction type)
   test/                   Vitest suites, fixtures of recorded hook payloads
 .claude/settings.json     hook entries that post to Pi (installed into the student's repo)
 ```
@@ -63,30 +67,34 @@ pi-sidecar/
 
 Pi runs **locally only**. Nothing is hosted.
 
-- `npm run dev` starts the Pi service on `127.0.0.1:4780` and the Vite UI. The student opens `http://127.0.0.1:4780` beside the terminal running Claude Code.
+- `npm start` (Electron Forge) opens the Pi window and starts the hook server on `127.0.0.1:4780`. The student keeps the window beside the terminal running Claude Code. We don't package an installer; the demo runs from source.
 - Hosted calls are the Anthropic Messages API (Pi's Haiku calls) and the student's own Claude Code login (Builder questions and video agents).
 - **Cloud provider:** none for hosting. Anthropic is the only hosted LLM provider.
 - A demo laptop needs Node, Claude Code logged in, an `ANTHROPIC_API_KEY`, and, for videos, the video engine prerequisites in §4.
 
 ## 4. Video engine integration
 
-Pi calls Project-Feynman's CLI as a subprocess:
+Video generation is an **optional feature, off by default**. The student turns it on with a toggle in the Pi window's settings, and it can be switched off at any time. When it's off, or when the engine isn't available, Pi gives a text or diagram explanation instead. The setting's default lives in `config.ts` (`VIDEO_ENABLED_BY_DEFAULT = false`).
+
+**Videos run through the student's own Claude session.** `make-video` starts headless Claude Code sessions using the Claude account logged in on the laptop, the same login the student uses with Claude Code. Video work therefore counts against the student's Claude plan, not Pi's API key, and Pi's Haiku budget stays small. To guarantee this, Pi removes `ANTHROPIC_API_KEY` from the environment it passes to `make-video`. Otherwise the engine would bill parts of the run to the key. Before turning the toggle on, the window checks that Claude Code is logged in (`claude auth status`) and tells the student that videos use their Claude plan.
+
+When enabled, Pi calls Project-Feynman's CLI as a subprocess:
 
 ```sh
 uv run make-video "<concept title>" --quality fastest --length 45 \
   --workspace <student repo> --name <job id>
 ```
 
-- **Speed and cost:** `--quality fastest` takes about 2 to 3 minutes and about $1 to $1.30 per minute of video. `--length 45` keeps videos short. `config.ts` caps videos per session (default 3), because each video costs about ten times a full set of Haiku quiz calls.
+- **Speed and usage:** `--quality fastest` takes about 2 to 3 minutes per minute of video. At API prices that would be about $1 to $1.30, and on a subscription it uses a similar share of the student's Claude plan. `--length 45` keeps videos short. `config.ts` caps videos per session (default 3), and the window shows how many are left.
 - **Grounding:** `--workspace` lets the engine's facts stage read the student's code in read-only mode, so videos explain the real implementation.
-- **Async:** jobs run in a queue (1 at a time). The UI shows a "video rendering" card and swaps in the MP4 from `out/<name>/` when the process exits 0.
-- **Agent choice:** use the default `--agent claude`. Do **not** use `--agent pi` for videos. That route has no sandbox and does not accept `--workspace`.
-- **Requirements:** macOS with a Metal GPU, uv, Python 3.14, and a Project-Feynman checkout at `VIDEO_ENGINE_DIR`. If any are missing, Pi turns video off and offers a text explanation instead.
+- **Async:** jobs run in a queue (1 at a time). The chat window shows a "video rendering" card and swaps in the MP4 from `out/<name>/` when the process exits 0. The window plays it through a custom `pi-video://` protocol that serves only files from the video output folder.
+- **Agent choice:** always pass `--agent claude`, the route that uses the logged-in Claude session. Never use `--agent pi`: it bills to an API key, has no sandbox, and does not accept `--workspace`. Never use `--agent codex`, which needs a different account.
+- **Requirements:** macOS with a Metal GPU, uv, Python 3.14, a Project-Feynman checkout at `VIDEO_ENGINE_DIR`, and a logged-in Claude Code. If any are missing, the toggle is greyed out with the reason shown, and Pi uses text explanations.
 
 ## 5. Test framework
 
 - **Vitest** for unit and integration tests, and **Testing Library** for React cards.
-- **Playwright** for one end-to-end test of the demo flow: a recorded hook event leads to a quiz card, an answer and feedback.
+- **Playwright** (its Electron support, `_electron.launch`) for one end-to-end test of the demo flow: a recorded hook event leads to a quiz card in the window, an answer and feedback.
 - **LLM calls are never made in unit tests.** Model access goes through a `TutorModel` interface. Tests use a fake that returns fixed JSON. A separate, opt-in `npm run test:live` suite calls Haiku to check prompt output against schemas.
 - **Fixtures:** recorded Claude Code hook payloads in `test/fixtures/hooks/`.
 - Run everything with `npm test`. `npm run typecheck` runs `tsc --noEmit`.
@@ -98,7 +106,9 @@ uv run make-video "<concept title>" --quality fastest --length 45 \
 | LangChain / LangGraph | Adds a second agent framework on top of pi and hides prompts and token use | The pi SDK and `config.ts` prompts |
 | `openai` or `@anthropic-ai/sdk` called directly from feature code | Bypasses pi's model runtime and makes the provider hard to swap | pi `ModelRuntime` behind the `TutorModel` interface |
 | Express | Weaker typing and no built-in schema validation | Fastify 5 |
-| Socket.IO | A heavy protocol layer for a single local client | `@fastify/websocket` (plain `ws`) |
+| Socket.IO / WebSocket libraries | The window and the main process are in one app, so a socket adds an unneeded network layer | Electron IPC through the preload `contextBridge` API |
+| `@electron/remote` | Gives the window direct access to main-process objects, which breaks context isolation | Typed IPC calls exposed by the preload script |
+| Next.js or another server-rendered web framework | Pi's window is a local app with no server rendering, and these frameworks fight Electron's file and protocol model | React with Vite |
 | axios / node-fetch | Node 24 has `fetch` built in | Global `fetch` |
 | Zod | A second schema library next to the one pi uses | TypeBox |
 | Prisma / any ORM or database server | State lasts one session. A database adds setup on every laptop. | In-memory state plus a JSONL event log |
@@ -108,16 +118,21 @@ uv run make-video "<concept title>" --quality fastest --length 45 \
 
 ## 7. Security basics
 
-- **Secrets:** `ANTHROPIC_API_KEY` and `VIDEO_ENGINE_DIR` live in `.env`, which is gitignored. A committed `.env.example` lists them without values. No key ever reaches the browser.
+- **Secrets:** `ANTHROPIC_API_KEY` and `VIDEO_ENGINE_DIR` live in `.env`, which is gitignored. A committed `.env.example` lists them without values. Keys stay in the Electron main process and never reach the window.
+- **Electron hardening:**
+  - The window runs with `contextIsolation: true`, `sandbox: true` and `nodeIntegration: false`.
+  - The preload script exposes a small typed API (send answer, receive card) and nothing else.
+  - The window loads only the app's own bundle, with a strict Content Security Policy.
+  - Navigation and new windows are blocked. External links open in the system browser.
 - **Local only:** the server binds to `127.0.0.1`, never `0.0.0.0`. The hook endpoint checks a random per-session token that Pi writes into the hook command at startup, so other local pages can't post fake events.
 - **Pi never writes to the student's repo:**
   - Pi's agent session gets only the `read`, `grep`, `find` and `ls` tools.
   - A `tool_call` extension handler blocks any path outside the repo and any secret file (`.env*`, `*.pem`, `id_*`, `.git/`).
 - **Builder questions are read-only:** `claude -p` runs with `--allowedTools Read,Grep,Glob` and `--permission-mode dontAsk`.
-- **Input validation:** every hook payload, WebSocket message and model JSON output is checked against a TypeBox schema. Bad input is logged and dropped.
+- **Input validation:** every hook payload, IPC message and model JSON output is checked against a TypeBox schema. Bad input is logged and dropped.
 - **Subprocesses:** `make-video` and `claude` are started with argument arrays, never a shell string. Concept titles are passed as one argument.
 - **Student data:** answers and learning state stay on the laptop in `.pi-sidecar/` (gitignored). Only the code snippets and answers needed for grading are sent to the model.
-- **Cost guard:** `config.ts` sets per-session caps on Haiku tokens, Builder calls and videos. Pi stops intervening when a cap is reached.
+- **Cost guard:** `config.ts` sets per-session caps on Haiku tokens, Builder calls and videos. Pi stops intervening when a cap is reached. Video is off unless the student turns it on, and its subprocess never receives the API key, so it can only use the student's own Claude login.
 
 ## 8. Examples
 
@@ -284,5 +299,5 @@ export default function registerAskBuilder(pi: ExtensionAPI) {
 These follow from the open questions in §13 of the founding idea:
 
 - **Blocking the Builder.** A `UserPromptSubmit` or `PreToolUse` hook can likely hold Claude Code until the student finishes a Pi exercise, by blocking until Pi's endpoint answers. We still need to confirm the hook timeout behavior, and decide when blocking is worth it.
-- **Web UI or terminal.** This document assumes a local web UI because videos and diagrams need it. A terminal-only Pi would mean using the pi harness's TUI and dropping inline video.
+- **Window placement.** Where the Pi window sits next to the terminal, and how it gets the student's attention without breaking their flow. Options include a side-docked window, always-on-top, or a system notification.
 - **Video engine access.** `make-video` runs on macOS with a Metal GPU from a Project-Feynman checkout. We need to decide which teammates' laptops run videos, and whether the others share one machine's renders during the demo.
