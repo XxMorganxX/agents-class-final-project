@@ -10,7 +10,7 @@ Status key: ✅ done · 🟡 started, gaps remain · ⬜ not started
 |---|---|---|---|---|
 | 1 | AI-DLC v1.0.1 rule files | [`CLAUDE.md`](../CLAUDE.md), `.aidlc-rule-details/` | C (setup) | ✅ |
 | 2 | README: names, NetIDs, agent, AI-DLC version | [`README.md`](../README.md) | E | ✅ |
-| 3 | README: overview (problem and LLM rationale, LLM integration, scope) | [`README.md`](../README.md) | A | 🟡 scope paragraph predates the MVP in founding idea §10 |
+| 3 | README: overview (problem and LLM rationale, LLM integration, scope) | [`README.md`](../README.md) | A | ✅ pending team review |
 | 4 | README: collaboration plan | [`README.md`](../README.md) | E | ✅ |
 | 5 | Vision document | [`founding-idea.md`](founding-idea.md) | B | ✅ pending team review |
 | 6 | Technical environment document | `docs/technical-environment.md` (planned) | B | ⬜ |
