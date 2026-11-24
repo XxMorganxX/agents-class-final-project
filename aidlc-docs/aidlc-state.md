@@ -4,7 +4,7 @@
 - **Project Name**: Anti-Vibe Coding (Pi, the learning sidecar)
 - **Project Type**: Greenfield
 - **Start Date**: 2026-11-19T18:01:04Z
-- **Current Stage**: INCEPTION - Workflow Planning (next; not started)
+- **Current Stage**: INCEPTION - Application Design (next; not started)
 - **AI-DLC Version**: v1.0.1
 - **Input Documents**: `docs/founding-idea.md` (vision), `docs/technical-environment.md` (technical environment)
 
@@ -37,18 +37,30 @@
 - **PBT enforcement mode:** Partial. PBT-02, PBT-03, PBT-07, PBT-08 and PBT-09 are blocking; all other PBT rules are advisory. Full rules file loaded.
 - **Security Baseline / Resiliency Baseline:** opted out; full rules files not loaded. Skips are logged in audit.md.
 
+## Execution Plan Summary
+- **Plan**: `inception/plans/execution-plan.md` (approved 2026-11-24)
+- **Total Stages**: 13 (Operations placeholder not counted)
+- **Stages to Execute**: Application Design, Units Generation; then in Construction (after the milestone), per unit: Functional Design, NFR Requirements (light), NFR Design, Code Generation; then Build and Test
+- **Stages to Skip**: Reverse Engineering (greenfield); Infrastructure Design (local-only app, no cloud resources or IaC)
+
 ## Stage Progress
 ### 🔵 INCEPTION PHASE
 - [x] Workspace Detection (2026-11-19T18:01:04Z)
 - [-] Reverse Engineering (SKIPPED: greenfield, no existing code)
 - [x] Requirements Analysis (approved 2026-11-23; all 35 questions answered; five follow-up gaps closed; `inception/requirements/requirements.md`; depth Comprehensive)
 - [x] User Stories (approved 2026-11-24; plan `inception/plans/story-generation-plan.md` with 16 answers and 4 follow-ups; `inception/user-stories/stories.md` (33 core + 3 video stories, 2 journeys) and `personas.md` (3 personas, 2 anti-personas))
-- [ ] Workflow Planning
+- [x] Workflow Planning (approved 2026-11-24; `inception/plans/execution-plan.md`; 7 stages to execute, 2 skipped)
 - [ ] Application Design (EXECUTE: required by team)
 - [ ] Units Generation (EXECUTE: required by team)
 
 ### 🟢 CONSTRUCTION PHASE
-- Not started. Out of scope for this run (milestone stop point is after Units Generation).
+Not started. Out of scope for this run (milestone stop point is after Units Generation). Planned:
+- [ ] Functional Design - EXECUTE (per unit with business logic)
+- [ ] NFR Requirements - EXECUTE (per unit, light; PBT-09 blocking applies)
+- [ ] NFR Design - EXECUTE (per unit that carries NFRs)
+- [ ] Infrastructure Design - SKIP (local only)
+- [ ] Code Generation - EXECUTE
+- [ ] Build and Test - EXECUTE
 
 ### 🟡 OPERATIONS PHASE
 - Placeholder.

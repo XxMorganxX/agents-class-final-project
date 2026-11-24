@@ -33,19 +33,19 @@
 
 ### Step 4: Checkpoint and reset
 - [x] Ask the agent to commit the checkpoint.
-- [ ] Reset the context, as in Step 1.
+- [x] Reset the context, as in Step 1.
 
 **Done when** the commit exists and a fresh session has resumed at Workflow Planning.
 
 ### Step 5: Workflow Planning
-- [ ] The agent writes `plans/execution-plan.md`.
-- [ ] Review which stages it runs or skips. Application Design and Units Generation must both run.
-- [ ] Approve.
+- [x] The agent writes `plans/execution-plan.md`.
+- [x] Review which stages it runs or skips. Application Design and Units Generation must both run.
+- [x] Approve. (2026-11-24)
 
 **Done when** the execution plan is approved and `aidlc-state.md` marks Workflow Planning complete.
 
 ### Step 6: Checkpoint and reset
-- [ ] Commit the checkpoint, then reset the context.
+- [x] Commit the checkpoint, then reset the context. (committed and pushed; reset pending)
 
 **Done when** the commit exists and a fresh session has resumed at Application Design.
 
@@ -92,3 +92,5 @@
 - 2026-11-23: Step 1 done. A fresh session resumed at User Stories from `aidlc-state.md`. Step 2 started: wrote `user-stories-assessment.md` and `story-generation-plan.md` (16 questions). Waiting for the team's answers.
 - 2026-11-24: New session resumed at User Stories Part 1. All 16 answers in `story-generation-plan.md` still blank. Step 2 is waiting on the team's answers.
 - 2026-11-24: Step 2 done (16 answers, 4 follow-ups all A, plan approved). Step 3 done: stories.md (33 core + 3 video) and personas.md written and approved. Step 4: checkpoint committed; waiting for the context reset.
+- 2026-11-24: Step 4 done: a fresh session resumed at Workflow Planning. Step 5: `execution-plan.md` written (Application Design and Units Generation both EXECUTE; Infrastructure Design SKIP). Waiting for the team's review and approval.
+- 2026-11-24: Step 5 done: execution plan approved. Step 6: checkpoint committed and pushed; waiting for the context reset before Application Design.
