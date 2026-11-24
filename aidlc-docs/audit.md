@@ -189,3 +189,84 @@ Rewrote the README scope section to match requirements.md: Pi as a teaching assi
 **Context**: INCEPTION - User Stories, Part 1 (Planning). Waiting for the team's answers to story-generation-plan.md.
 
 ---
+
+## Session Resumption
+**Timestamp**: 2026-11-24T23:11:50Z
+**User Input**: "Using AI-DLC, continue the workflow. Guide us through tasks/milestone-1-inception.md, one step at a time."
+**AI Response**: "Read aidlc-state.md: INCEPTION - User Stories, Part 1 (Planning), plan written and waiting for team answers. Loaded requirements.md, story-generation-plan.md and the milestone checklist. Found all 16 [Answer]: tags in story-generation-plan.md still blank, so checklist Step 2 is still open at 'answer every [Answer]: tag'. The request says to continue, so the welcome-back choice was taken as 'A) Continue where you left off'. Asked the team to answer the 16 questions in the file and say when they're done. No artifacts changed."
+**Context**: INCEPTION - User Stories, Part 1 (Planning). Waiting for the team's answers.
+
+---
+
+## User Stories - Part 1 Planning: Team Answers
+**Timestamp**: 2026-11-24T23:14:48Z
+**User Input**: "Team answers for the story plan. Write each one into its [Answer]: tag in story-generation-plan.md with the reason:
+
+Q1: B. Two student levels (intro and intermediate) plus the demo teammate. Two levels make the personas more specific. An instructor without stories adds little.
+Q2: C. Both anti-personas. They sharpen what Pi must not do (write code) and what it must avoid (needless interruptions).
+Q3: C. Working profile plus a day-in-the-life scenario, so the personas feel real.
+Q4: D. Epics follow the student's journey, stories inside are cut by feature. Easy to read and maps cleanly onto units.
+Q5: B. Medium, 25 to 35 stories. Realistic for a two-week build.
+Q6: B. One story for the shared component system, plus one per type the student responds to.
+Q7: A. S/M/L size labels, to help Units Generation fit the two-week window.
+Q8: C. Given/When/Then for student behavior, checklists for rules and limits.
+Q9: C. [review] criteria only for lesson content and grading, because only teaching quality needs a human check.
+Q10: A. At least one failure-path criterion per story where failure is possible (bad model output, Builder not answering).
+Q11: A. IDs on each story plus a reverse table, so requirements and stories stay traceable.
+Q12: C. Student-facing outcomes where they exist, team stories only where there is none.
+Q13: B. A small set of \"As Pi...\" stories. Pi deciding when to intervene and when to ask the Builder is the agentic core of the product and needs its own testable criteria.
+Q14: B. Add the second journey: setup on a fresh clone without the video runner. That is our biggest demo risk.
+Q15: A. Video as full stories tagged \"Optional feature\".
+Q16: B. No stretch stories, just a \"Not in this release\" list linking to requirements section 8. Keeps the focus tight.
+
+Check for gaps or contradictions, then show me the plan for approval."
+**AI Response**: "Wrote all 16 answers, with the team's reasons, into the [Answer]: tags of story-generation-plan.md. Ran the Step 9 answer analysis: no contradictions between answers or with requirements.md. Found four open decisions and, per Step 10, wrote story-generation-clarification-questions.md with 4 questions: (1) how the intro persona is served without difficulty scaling (v2, §8); (2) the decision rule between Q12 student-facing outcomes and Q13 'As Pi...' stories; (3) whether Q9's [review] criteria apply to 'As Pi...' decision stories; (4) what happens if the story count exceeds Q5's 25-35 range once Q6, Q12, Q13 and Q15 stories are added (estimate 33-38). Each question has a recommended option. Plan approval is held until these are answered."
+**Context**: INCEPTION - User Stories, Part 1 (Planning), Steps 8-10. Waiting for clarification answers.
+
+---
+
+## User Stories - Part 1 Planning: Clarification Answers
+**Timestamp**: 2026-11-24T23:15:31Z
+**User Input**: "do the recommandation"
+**AI Response**: "Took this as option A, the recommendation, for all four follow-up questions, and wrote them into story-generation-clarification-questions.md. Added a 'Generation rules' table to story-generation-plan.md that records the decisions from Q1-Q16 and the four follow-ups. Re-checked: no ambiguities remain. Presenting the plan for approval."
+**Context**: INCEPTION - User Stories, Part 1 (Planning), Step 10 resolved.
+
+---
+
+## User Stories - Part 1 Planning: Approval Prompt
+**Timestamp**: 2026-11-24T23:15:31Z
+**AI Prompt**: "Story plan ready for approval: aidlc-docs/inception/plans/story-generation-plan.md (16 answers and the Generation rules table) and story-generation-clarification-questions.md (4 follow-ups, all A). Do you approve the plan, so I can start Part 2 (writing stories.md and personas.md)? Or do you want changes?"
+**Context**: INCEPTION - User Stories, Part 1 (Planning), Steps 12-13. Waiting for explicit approval.
+
+---
+
+## User Stories - Part 1 Planning: Plan Approved
+**Timestamp**: 2026-11-24T23:15:55Z
+**User Input**: "yes"
+**AI Response**: "Recorded the team's explicit approval of story-generation-plan.md. Starting Part 2 (Generation): stories.md and personas.md, following the Generation rules table."
+**Context**: INCEPTION - User Stories, Part 1 complete (Step 14). Part 2 started.
+
+---
+
+## User Stories - Part 2 Generation: Stories and Personas Written
+**Timestamp**: 2026-11-24T23:19:27Z
+**User Input**: "(none; continuing from the plan approval above)"
+**AI Response**: "Wrote inception/user-stories/personas.md: P1 Riley (intro student), P2 Devin (intermediate student), P3 Sam (demo teammate), each a working profile with a day-in-the-life scenario; anti-personas A1 (wants Pi to do the work) and A2 (experienced developer who sees interruptions as a cost); a persona-to-story map. Wrote inception/user-stories/stories.md: Decisions block, [review] rubric, definition of done, journeys J1 (MVP demo session, with changes from founding idea §7) and J2 (fresh clone without the video runner), 33 core stories in 8 journey epics (19 S, 13 M, 1 L), 3 video stories tagged Optional feature, a 'Not in this release' list, and a requirement-to-story table covering every FR, NFR and AC. Every story has acceptance criteria labeled [test] or [review], and failure paths marked. Marked all Part 2 checkboxes in story-generation-plan.md and updated aidlc-state.md."
+**Context**: INCEPTION - User Stories, Part 2 (Generation), Steps 15-18.
+
+---
+
+## User Stories - Part 2 Generation: Approval Prompt
+**Timestamp**: 2026-11-24T23:19:27Z
+**AI Prompt**: "User Stories Complete. REVIEW REQUIRED: aidlc-docs/inception/user-stories/stories.md and aidlc-docs/inception/user-stories/personas.md. You may: Request Changes (ask for modifications to the stories or personas based on your review) or Approve & Continue (approve user stories and proceed to Workflow Planning)."
+**Context**: INCEPTION - User Stories, Part 2, Steps 19-20. Waiting for explicit approval.
+
+---
+
+## User Stories - Part 2: Team Approval
+**Timestamp**: 2026-11-24T23:21:07Z
+**User Input**: "can we do the worflow planning ?"
+**AI Response**: "Asked the team to confirm, because moving to Workflow Planning implies approving the stories and the checklist requires a checkpoint and a context reset first. Options: approve, commit and reset (recommended); approve and continue in this session; request changes first. Team answer: \"Approve, commit, reset (Recommended)\". Recorded explicit approval of stories.md and personas.md. Marked User Stories complete in aidlc-state.md and set the next stage to Workflow Planning. Committed the checkpoint. Asked the team to reset the context before Workflow Planning."
+**Context**: INCEPTION - User Stories approved (Steps 21-23). Next stage: Workflow Planning.
+
+---

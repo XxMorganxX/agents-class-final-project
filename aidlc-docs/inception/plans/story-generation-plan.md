@@ -61,7 +61,7 @@ D) Four personas: intro student, intermediate student, demo teammate, and course
 
 E) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. Two student levels (intro and intermediate) plus the demo teammate. Two levels make the personas more specific. An instructor without stories adds little.
 
 ## Question 2
 Should `personas.md` include an anti-persona: someone Pi is deliberately not built for?
@@ -78,7 +78,7 @@ D) No anti-persona. The out-of-scope list in requirements §8 is enough
 
 E) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. Both anti-personas. They sharpen what Pi must not do (write code) and what it must avoid (needless interruptions).
 
 ## Question 3
 How much detail should each persona have?
@@ -93,7 +93,7 @@ C) Working profile as in B, plus a short "day in the life" scenario of one codin
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. Working profile plus a day-in-the-life scenario, so the personas feel real.
 
 ## Part B: Breakdown and size
 
@@ -114,7 +114,7 @@ E) Epic-based hybrid: epics follow domains, and the stories inside each epic are
 
 F) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: D. Epics follow the student's journey, stories inside are cut by feature. Easy to read and maps cleanly onto units.
 
 ## Question 5
 How large should each story be?
@@ -129,7 +129,7 @@ C) Large: one story per major capability (roughly 12 to 18 stories), with more a
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. Medium, 25 to 35 stories. Realistic for a two-week build.
 
 ## Question 6
 How should the nine lesson component types (FR-2.7) appear in the stories?
@@ -144,7 +144,7 @@ C) One story for the shared component system, with each type listed as an accept
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. One story for the shared component system, plus one per type the student responds to.
 
 ## Question 7
 Should stories be labeled with a relative size?
@@ -157,7 +157,7 @@ B) No size labels. Units Generation handles balancing
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. S/M/L size labels, to help Units Generation fit the two-week window.
 
 ## Part C: Format and acceptance criteria
 
@@ -174,7 +174,7 @@ C) Given/When/Then for behavior the student triggers, and checklist bullets for 
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. Given/When/Then for student behavior, checklists for rules and limits.
 
 ## Question 9
 Pi's output comes from a model, so the same event can produce different lessons. How should acceptance criteria handle that?
@@ -189,7 +189,7 @@ C) Same as B, but **[review]** criteria are allowed only on stories about lesson
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. [review] criteria only for lesson content and grading, because only teaching quality needs a human check.
 
 ## Question 10
 How should failure paths appear?
@@ -204,7 +204,7 @@ C) Separate "when things go wrong" stories, grouped together, apart from the hap
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. At least one failure-path criterion per story where failure is possible (bad model output, Builder not answering).
 
 ## Question 11
 How should each story link back to requirements.md?
@@ -219,7 +219,7 @@ C) Only the reverse table at the end of `stories.md`
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. IDs on each story plus a reverse table, so requirements and stories stay traceable.
 
 ## Part D: Parts of Pi the student doesn't see
 
@@ -238,7 +238,7 @@ D) Don't write stories for these. Leave them in requirements.md, and list them i
 
 E) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: C. Student-facing outcomes where they exist, team stories only where there is none.
 
 ## Question 13
 How should Pi's agent (FR-0) be treated in stories: deciding what to teach, picking a component, asking the Builder?
@@ -251,7 +251,7 @@ B) Write a small set of stories with Pi as the actor ("As Pi, I want to…"), ea
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. A small set of "As Pi..." stories. Pi deciding when to intervene and when to ask the Builder is the agentic core of the product and needs its own testable criteria.
 
 ## Part E: Journeys and scope
 
@@ -268,7 +268,7 @@ C) No journey. The stories are enough
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. Add the second journey: setup on a fresh clone without the video runner. That is our biggest demo risk.
 
 ## Question 15
 How should the optional video feature (FR-7) be covered?
@@ -281,7 +281,7 @@ B) One story covering the whole video feature, with all its criteria inside
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A. Video as full stories tagged "Optional feature".
 
 ## Question 16
 How should stretch goals and out-of-scope items (requirements §8) appear?
@@ -296,7 +296,30 @@ C) Stretch goals written as full stories with acceptance criteria, in a final "S
 
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B. No stretch stories, just a "Not in this release" list linking to requirements section 8. Keeps the focus tight.
+
+---
+
+# Generation rules (from the answers, 2026-11-24)
+
+These rules come from Questions 1 to 16 and the four follow-ups in `story-generation-clarification-questions.md`, where the team picked option A for all four.
+
+| Topic | Rule | Source |
+|---|---|---|
+| Personas | An intro-level student, an intermediate student and the demo teammate, each as a working profile with a day-in-the-life scenario | Q1 B, Q3 C |
+| Anti-personas | A student who wants Pi to write or fix their code, and an experienced developer who sees Pi's interruptions as a cost | Q2 C |
+| Intro student | Served only by features already in scope: first-use term definitions, explain first after a miss (FR-3.2), drill-down (FR-4.3) and skip (FR-3.5). No story changes difficulty per student (that is v2, §8) | Q1, follow-up 1 A |
+| Organization | Epics follow the student's journey. The stories inside each epic are cut by feature | Q4 D |
+| Size | Medium stories, 25 to 35 in the core set. Video stories don't count toward that range. Merge stories only if the core set goes over 35. Every story is labeled S, M or L, with a one-line note on what makes an L large | Q5 B, Q7 A, follow-up 4 A |
+| Component types | One story for the shared component system, plus one each for multiple choice, written response, quick-time event and prediction. Display-only types appear as criteria in the stories that use them | Q6 B |
+| Acceptance criteria | Given/When/Then for behavior the student triggers. Checklist bullets for rules and limits | Q8 C |
+| [test] and [review] | Each criterion is labeled. [review] is allowed only on lesson-content and grading stories, including the relevance of the "As Pi…" decisions. Limits on the agent stay [test] | Q9 C, follow-up 3 A |
+| Failure paths | Every story where something can fail has at least one failure-path criterion | Q10 A |
+| Traceability | Every story lists its FR, NFR and AC IDs, and `stories.md` ends with a reverse table | Q11 A |
+| Actors | "As Pi…" stories cover the agent's decisions: what to teach and when, which component to show, when to show nothing, when to ask the Builder, when to drop a question. Limits on the agent (read-only tools, repo boundary, secret files, step limit, caps) are student-facing trust and cost stories. Team stories ("As a Pi developer…") cover only logging and the config module | Q12 C, Q13 B, follow-up 2 A |
+| Journeys | Two journeys at the top of `stories.md`. (1) The MVP demo session, with a note on what changed from founding idea §7. (2) A teammate setting Pi up on a fresh clone without the video runner (AC-5, AC-6) | Q14 B |
+| Video | Full stories in their own group, each tagged **Optional feature** | Q15 A |
+| Scope | No stretch stories. A short "Not in this release" list at the end links to requirements §8 | Q16 B |
 
 ---
 
@@ -305,37 +328,37 @@ D) Other (please describe after [Answer]: tag below)
 Part 2 runs only after every question is answered, the answers are checked, and the team approves this plan. Each step is marked `[x]` as soon as it is done.
 
 ## Prepare
-- [ ] Re-read requirements.md and list every FR, NFR and AC ID to cover
-- [ ] Record the team's answers to Questions 1 to 16 as the rules for generation, in a short "Decisions" block at the top of `stories.md`
+- [x] Re-read requirements.md and list every FR, NFR and AC ID to cover
+- [x] Record the team's answers to Questions 1 to 16 as the rules for generation, in a short "Decisions" block at the top of `stories.md`
 
 ## Personas (`personas.md`)
-- [ ] Write the personas chosen in Question 1, at the detail level from Question 3
-- [ ] Write the anti-persona(s) from Question 2, if any
-- [ ] Check each persona against requirements §4 (level, language, setup context)
-- [ ] Add a persona-to-story map, filled in after the stories are written
+- [x] Write the personas chosen in Question 1, at the detail level from Question 3
+- [x] Write the anti-persona(s) from Question 2, if any
+- [x] Check each persona against requirements §4 (level, language, setup context)
+- [x] Add a persona-to-story map, filled in after the stories are written
 
 ## Stories (`stories.md`)
-- [ ] Set up the groups or epics chosen in Question 4
-- [ ] Write the journey or journeys from Question 14, if any
-- [ ] Write the stories for each group, sized per Question 5, with component types handled per Question 6
-- [ ] Write the stories for parts the student doesn't see, per Questions 12 and 13
-- [ ] Write the video stories per Question 15
-- [ ] Write the stretch and out-of-scope section per Question 16
-- [ ] For every story, write acceptance criteria in the format from Question 8, with **[test]** or **[review]** labels per Question 9 and failure paths per Question 10
-- [ ] Add size labels per Question 7, if chosen
-- [ ] Add requirement links and the traceability table per Question 11
+- [x] Set up the groups or epics chosen in Question 4
+- [x] Write the journey or journeys from Question 14, if any
+- [x] Write the stories for each group, sized per Question 5, with component types handled per Question 6
+- [x] Write the stories for parts the student doesn't see, per Questions 12 and 13
+- [x] Write the video stories per Question 15
+- [x] Write the stretch and out-of-scope section per Question 16
+- [x] For every story, write acceptance criteria in the format from Question 8, with **[test]** or **[review]** labels per Question 9 and failure paths per Question 10
+- [x] Add size labels per Question 7, if chosen
+- [x] Add requirement links and the traceability table per Question 11
 
 ## Check
-- [ ] Every story follows INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable. Split or merge any that don't
-- [ ] Every story has acceptance criteria
-- [ ] Every FR and AC in requirements.md maps to at least one story, or is marked as covered by an NFR with no story (if Question 12 allows that)
-- [ ] No story contradicts requirements.md or brings back an out-of-scope item
-- [ ] Every persona maps to at least one story, and every story to at least one persona
-- [ ] Fill in the persona-to-story map in `personas.md`
+- [x] Every story follows INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable. Split or merge any that don't
+- [x] Every story has acceptance criteria
+- [x] Every FR and AC in requirements.md maps to at least one story, or is marked as covered by an NFR with no story (if Question 12 allows that)
+- [x] No story contradicts requirements.md or brings back an out-of-scope item
+- [x] Every persona maps to at least one story, and every story to at least one persona
+- [x] Fill in the persona-to-story map in `personas.md`
 
 ## Mandatory artifacts
-- [ ] Generate `stories.md` with user stories following INVEST criteria
-- [ ] Generate `personas.md` with user archetypes and characteristics
-- [ ] Ensure stories are Independent, Negotiable, Valuable, Estimable, Small, Testable
-- [ ] Include acceptance criteria for each story
-- [ ] Map personas to relevant user stories
+- [x] Generate `stories.md` with user stories following INVEST criteria
+- [x] Generate `personas.md` with user archetypes and characteristics
+- [x] Ensure stories are Independent, Negotiable, Valuable, Estimable, Small, Testable
+- [x] Include acceptance criteria for each story
+- [x] Map personas to relevant user stories

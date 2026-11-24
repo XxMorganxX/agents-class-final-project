@@ -19,20 +19,20 @@
 
 ### Step 2: User Stories, part 1 (the plan)
 - [x] The agent writes the story plan and its question file in `aidlc-docs/inception/plans/`. (The questions are embedded in `story-generation-plan.md`, as the AI-DLC user-stories rule requires.)
-- [ ] As a team, answer every `[Answer]:` tag in the question file. Leave none blank.
-- [ ] Review the plan and approve it, or ask for changes.
+- [x] As a team, answer every `[Answer]:` tag in the question file. Leave none blank. (16 answers, plus 4 follow-ups all answered A, 2026-11-24)
+- [x] Review the plan and approve it, or ask for changes. (approved 2026-11-24)
 
 **Done when** every answer is filled in, the agent has checked the answers for ambiguity, and the team has approved the plan.
 
 ### Step 3: User Stories, part 2 (stories and personas)
-- [ ] The agent writes `user-stories/stories.md` (every story has acceptance criteria) and `user-stories/personas.md`.
-- [ ] Review both files as a team. Push back on anything that doesn't fit Pi. Graders look for engagement beyond approvals.
-- [ ] Approve.
+- [x] The agent writes `user-stories/stories.md` (every story has acceptance criteria) and `user-stories/personas.md`.
+- [x] Review both files as a team. Push back on anything that doesn't fit Pi. Graders look for engagement beyond approvals.
+- [x] Approve. (2026-11-24)
 
 **Done when** both files exist, the team has approved them, and `aidlc-state.md` marks User Stories complete.
 
 ### Step 4: Checkpoint and reset
-- [ ] Ask the agent to commit the checkpoint.
+- [x] Ask the agent to commit the checkpoint.
 - [ ] Reset the context, as in Step 1.
 
 **Done when** the commit exists and a fresh session has resumed at Workflow Planning.
@@ -90,3 +90,5 @@
 ## Progress log
 - 2026-11-23: Created this list after Requirements Analysis was approved and committed. Starting Step 1.
 - 2026-11-23: Step 1 done. A fresh session resumed at User Stories from `aidlc-state.md`. Step 2 started: wrote `user-stories-assessment.md` and `story-generation-plan.md` (16 questions). Waiting for the team's answers.
+- 2026-11-24: New session resumed at User Stories Part 1. All 16 answers in `story-generation-plan.md` still blank. Step 2 is waiting on the team's answers.
+- 2026-11-24: Step 2 done (16 answers, 4 follow-ups all A, plan approved). Step 3 done: stories.md (33 core + 3 video) and personas.md written and approved. Step 4: checkpoint committed; waiting for the context reset.
