@@ -4,7 +4,7 @@
 - **Project Name**: Anti-Vibe Coding (Pi, the learning sidecar)
 - **Project Type**: Greenfield
 - **Start Date**: 2026-11-19T18:01:04Z
-- **Current Stage**: INCEPTION - User Stories (next; Requirements Analysis approved 2026-11-23)
+- **Current Stage**: INCEPTION - User Stories, Part 1 (Planning): story plan and questions written, waiting for team answers
 - **AI-DLC Version**: v1.0.1
 - **Input Documents**: `docs/founding-idea.md` (vision), `docs/technical-environment.md` (technical environment)
 
@@ -42,7 +42,7 @@
 - [x] Workspace Detection (2026-11-19T18:01:04Z)
 - [-] Reverse Engineering (SKIPPED: greenfield, no existing code)
 - [x] Requirements Analysis (approved 2026-11-23; all 35 questions answered; five follow-up gaps closed; `inception/requirements/requirements.md`; depth Comprehensive)
-- [ ] User Stories (EXECUTE: required by team)
+- [ ] User Stories (EXECUTE: required by team; IN PROGRESS: Part 1 plan written 2026-11-23, `inception/plans/story-generation-plan.md`)
 - [ ] Workflow Planning
 - [ ] Application Design (EXECUTE: required by team)
 - [ ] Units Generation (EXECUTE: required by team)

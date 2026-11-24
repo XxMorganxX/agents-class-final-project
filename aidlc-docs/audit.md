@@ -149,3 +149,43 @@ Rewrote the README scope section to match requirements.md: Pi as a teaching assi
 **Context**: Between INCEPTION stages: Requirements Analysis approved, User Stories not started.
 
 ---
+
+## Team Request: Step-by-Step Checklist for the Remaining Milestone Work
+**Timestamp**: 2026-11-23T17:30:42Z
+**User Input**: "Make each of the left over requirements a set of to-dos and guide me through each step, only progress when the previous step is completly done"
+**AI Response**: "Created tasks/milestone-1-inception.md at the repo root (a working checklist, not an AI-DLC artifact). It has 12 ordered steps, each with to-dos and 'Done when' criteria: context reset; User Stories plan; stories and personas; checkpoint and reset; Workflow Planning; checkpoint and reset; Application Design; checkpoint and reset; Units Generation with a stop before Construction; final record check and milestone map update; commit and push (after confirmation); incognito check and Canvas submission. Began guiding the team through Step 1 (context reset)."
+**Context**: Between INCEPTION stages: Requirements Analysis approved, User Stories next.
+
+---
+
+## Team Question: Scope of the Checklist
+**Timestamp**: 2026-11-23T17:32:24Z
+**User Input**: "this is only for the first milestone, yes?"
+**AI Response**: "Confirmed that tasks/milestone-1-inception.md covers only the mid-semester milestone (Inception, due 2026-11-24). It ends at the Canvas submission and includes no Construction work. Noted that the Final Project (due 2026-12-16: Construction for every unit, demo video, recorded presentation, peer evaluation) would get its own checklist later. No files changed."
+**Context**: Between INCEPTION stages: Requirements Analysis approved, User Stories next.
+
+---
+
+## Session Resumption
+**Timestamp**: 2026-11-23T17:35:03Z
+**User Input**: "Using AI-DLC, continue the workflow. Guide us through tasks/milestone-1-inception.md, one step at a time."
+**AI Response**: "Fresh session (context reset per checklist Step 1). Read aidlc-state.md: project Anti-Vibe Coding (Pi), INCEPTION phase, last completed stage Requirements Analysis (approved 2026-11-23, checkpoint b9b6ccb), next stage User Stories. Loaded previous-stage artifacts: requirements.md and requirement-verification-questions.md, plus docs/founding-idea.md and docs/mid-semester-milestone.md. The team's request already says to continue, so the welcome-back A/B choice was taken as 'A) Continue where you left off'. Marked checklist Step 1 done and started Step 2."
+**Context**: INCEPTION - User Stories, resumed from aidlc-state.md.
+
+---
+
+## User Stories - Part 1 Planning: Assessment, Plan and Questions
+**Timestamp**: 2026-11-23T17:35:03Z
+**User Input**: "(none; continuing from the session-resumption request above)"
+**AI Response**: "Wrote inception/plans/user-stories-assessment.md (decision: execute; all high-priority criteria met; also required by Run Scope). Wrote inception/plans/story-generation-plan.md with a comparison of five breakdown approaches, 16 embedded questions with [Answer]: tags (Part A personas Q1-Q3, Part B breakdown and size Q4-Q7, Part C format and acceptance criteria Q8-Q11, Part D parts of Pi the student doesn't see Q12-Q13, Part E journeys and scope Q14-Q16), and a Part 2 generation checklist including the mandatory artifacts. Asked the team to answer every [Answer]: tag and say when done."
+**Context**: INCEPTION - User Stories, Part 1 (Planning), Steps 1-7. Waiting for the team's answers.
+
+---
+
+## Team Request: Commit and Push
+**Timestamp**: 2026-11-24T12:09:15Z
+**User Input**: "commit everything to the github."
+**AI Response**: "Committed all pending changes to local main: audit.md, aidlc-state.md, inception/plans/user-stories-assessment.md, inception/plans/story-generation-plan.md (questions not yet answered) and tasks/milestone-1-inception.md. Pushed main to origin on GitHub, including the earlier Requirements Analysis checkpoint b9b6ccb, which had not been pushed. The team's request was taken as the confirmation needed for a push."
+**Context**: INCEPTION - User Stories, Part 1 (Planning). Waiting for the team's answers to story-generation-plan.md.
+
+---
