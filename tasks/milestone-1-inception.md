@@ -62,22 +62,22 @@
 **Done when** the commit exists and a fresh session has resumed at Units Generation.
 
 ### Step 9: Units Generation
-- [x] Answer the units question file. (15 answers, 5 clarifications in two rounds, plan revised and approved 2026-11-25)
+- [x] Answer the units question file. (15 answers, 6 clarifications in three rounds: 5 before the plan was approved, the 6th during the units review; plan revised and approved 2026-11-25)
 - [x] Review `application-design/unit-of-work.md`, `unit-of-work-dependency.md` and `unit-of-work-story-map.md`. Check that every story maps to a unit. (36 of 36 mapped; two changes requested and made: the dropped-U7 rule and the AC-5/J2 notes)
 - [x] Approve the units and tell the agent: "Stop here. Do not start Construction." (2026-11-25)
 
 **Done when** all three unit files exist, they are approved, `aidlc-state.md` marks Units Generation complete, and Construction has not started.
 
 ### Step 10: Final record check
-- [ ] The agent checks that `audit.md` logs every stage, answer and approval, and that `aidlc-state.md` matches the artifacts.
-- [ ] Every Inception artifact on the milestone list exists with real content.
-- [ ] The agent updates the status table in `docs/mid-semester-milestone.md`.
+- [x] The agent checks that `audit.md` logs every stage, answer and approval, and that `aidlc-state.md` matches the artifacts.
+- [x] Every Inception artifact on the milestone list exists with real content.
+- [x] The agent updates the status table in `docs/mid-semester-milestone.md`.
 
 **Done when** nothing on the milestone checklist is missing or out of step with the record.
 
 ### Step 11: Commit and push
-- [ ] Commit everything that is left.
-- [ ] Confirm the push to GitHub. The agent asks first.
+- [x] Commit everything that is left.
+- [x] Confirm the push to GitHub. The agent asks first. (the team asked for the push, 2026-11-25)
 
 **Done when** `git status` is clean and `main` on GitHub matches the local branch.
 
@@ -97,3 +97,4 @@
 - 2026-11-24 (2026-11-25 UTC): Step 7 done: Application Design plan answered (15 answers, 1 clarification), design files written, two team changes made, then approved. Step 8 done: checkpoint `5346244` committed and pushed, and a fresh session resumed at Units Generation. Step 9 started: wrote `plans/unit-of-work-plan.md` (draft of 7 units, 15 questions). Waiting for the team's answers.
 - 2026-11-25 (UTC): Step 9 in progress. Plan answered (15 answers, 5 clarifications), revised before approval (U1 split into U1a and U1b, AC-4 time limit for U3) and approved. The three unit files are generated (8 units, 36 stories mapped). Waiting for the team to review the story map and approve the units.
 - 2026-11-25 (UTC): Step 9 done. Units approved with R7 confirmed, and the team said "Stop here. Do not start Construction." aidlc-state.md marks Units Generation and Inception complete. Construction not started. Next: Step 10, the final record check.
+- 2026-11-25 (UTC): Step 10 done. Record check found three gaps (an audit entry with no heading or timestamp, execution-plan.md progress out of date, no record of the bb0ff7a push); the team chose fixes and all three were applied as appended audit entries or logged changes. Milestone map rows 7 and 8 set to ✅. Step 11: everything committed and pushed. Next: Step 12, the incognito check and the Canvas submission.

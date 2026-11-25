@@ -133,10 +133,10 @@ Phase 3: OPERATIONS
 - [x] Requirements Analysis (COMPLETED 2026-11-23, Comprehensive)
 - [x] User Stories (COMPLETED 2026-11-24: 33 core and 3 video stories, 3 personas)
 - [x] Execution Plan (COMPLETED 2026-11-24: this document, approved by the team)
-- [ ] Application Design - **EXECUTE**
+- [x] Application Design - **EXECUTE** (COMPLETED 2026-11-25, approved by the team)
   - **Rationale:** Every component is new, and their methods and dependencies need defining: hook server, tutor agent and its tools, component registry and renderers, Builder bridge, video runner, learning record, config module, preload API. NFR-7.1 also asks for four contracts that have to be designed. The team's Run Scope requires this stage.
   - **Depth:** Standard. Define the components, their methods and the contracts between them. Detailed business rules are left to Functional Design.
-- [ ] Units Generation - **EXECUTE**
+- [x] Units Generation - **EXECUTE** (COMPLETED 2026-11-25, approved by the team: 8 units, 36 stories mapped)
   - **Rationale:** The system is too large for one unit in a two-week build. Several parts can be built and tested on their own behind contracts (fake `TutorModel`, recorded hook fixtures). Teammates need parallel work and a build order. The team's Run Scope requires this stage.
   - **Depth:** Standard. Every core and video story must map to a unit (`unit-of-work-story-map.md`), and the video unit stays optional and separable.
 
@@ -162,7 +162,7 @@ Phase 3: OPERATIONS
 Not applicable (greenfield). The build order of the units is decided in Units Generation.
 
 ## Estimated Timeline
-- **Total stages:** 13. 3 completed (Workspace Detection, Requirements Analysis, User Stories), 1 in progress (Workflow Planning), 7 to execute, 2 skipped (Reverse Engineering, Infrastructure Design). Operations is a placeholder and is not counted.
+- **Total stages:** 13. 6 completed (Workspace Detection, Requirements Analysis, User Stories, Workflow Planning, Application Design, Units Generation), 5 to execute in Construction (Functional Design, NFR Requirements, NFR Design, Code Generation, Build and Test), 2 skipped (Reverse Engineering, Infrastructure Design). Operations is a placeholder and is not counted.
 - **This milestone (due 2026-11-24, 11:59 PM):** Workflow Planning, Application Design and Units Generation. Each has a team approval and a checkpoint commit.
 - **Construction (final project, due 2026-12-16):** the two-week build window from the Run Scope. Functional Design, NFR Requirements, NFR Design and Code Generation run once per unit, then Build and Test runs once. The number of units, and so the per-unit schedule, is set in Units Generation.
 

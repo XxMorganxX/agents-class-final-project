@@ -14,8 +14,8 @@ Status key: ✅ done · 🟡 started, gaps remain · ⬜ not started
 | 4 | README: collaboration plan | [`README.md`](../README.md) | E | ✅ |
 | 5 | Vision document | [`founding-idea.md`](founding-idea.md) | B | ✅ |
 | 6 | Technical environment document | [`technical-environment.md`](technical-environment.md) | B | ✅ |
-| 7 | Inception artifacts | `aidlc-docs/inception/` | D | ⬜ |
-| 8 | AI-DLC record | `aidlc-docs/audit.md`, `aidlc-docs/aidlc-state.md` | C | ⬜ |
+| 7 | Inception artifacts | `aidlc-docs/inception/` | D | ✅ |
+| 8 | AI-DLC record | `aidlc-docs/audit.md`, `aidlc-docs/aidlc-state.md` | C | ✅ |
 
 ## 2. Vision document: founding idea vs. requirements
 
@@ -45,15 +45,15 @@ The planned LLM model and provider also go in the README.
 
 All of these go under `aidlc-docs/inception/`:
 
-- [ ] `requirements/requirements.md`
-- [ ] `requirements/requirement-verification-questions.md`, with every `[Answer]:` filled in
-- [ ] `user-stories/stories.md`, with acceptance criteria
-- [ ] `user-stories/personas.md`
-- [ ] `plans/execution-plan.md`
-- [ ] `application-design/`: the design files
-- [ ] `application-design/unit-of-work.md`
-- [ ] `application-design/unit-of-work-dependency.md`
-- [ ] `application-design/unit-of-work-story-map.md`
+- [x] `requirements/requirements.md`
+- [x] `requirements/requirement-verification-questions.md`, with every `[Answer]:` filled in
+- [x] `user-stories/stories.md`, with acceptance criteria
+- [x] `user-stories/personas.md`
+- [x] `plans/execution-plan.md`
+- [x] `application-design/`: the design files
+- [x] `application-design/unit-of-work.md`
+- [x] `application-design/unit-of-work-dependency.md`
+- [x] `application-design/unit-of-work-story-map.md`
 
 **Stop after Units Generation.** Approve the units and tell the agent not to start Construction.
 
