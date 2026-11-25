@@ -40,6 +40,7 @@ The team changed these points during Requirements Analysis. The founding idea do
 | §4 five mastery levels | Three levels: not yet shown, shaky, solid | Q19 |
 | tech-env §7 keeps data in `.pi-sidecar/` (location unstated) | Pi's own app-data folder, never the student's repo | Q13, Q28 |
 | tech-env §5 recorded hook fixtures | Kept for automated tests. No replay mode for the demo | Q35 |
+| NFR-5.3 (this document): token put in the hook command | Token in a `0600` runtime file that Pi rewrites at each launch; the hook script reads it. Hook entries stay the same between sessions (helps FR-1.7 and AC-6) | Application Design Q11 and clarification 1, 2026-11-25 |
 
 The README's scope section was updated on 2026-11-23 to match these changes. `founding-idea.md` is unchanged.
 
@@ -219,7 +220,7 @@ The README's scope section was updated on 2026-11-23 to match these changes. `fo
 ### NFR-5 Security (Q30: Security extension off; tech-env §7 controls kept as requirements)
 - **NFR-5.1** The Electron window runs with `contextIsolation: true`, `sandbox: true` and `nodeIntegration: false`, and a strict Content Security Policy. It loads only the app's own bundle, and navigation and new windows are blocked.
 - **NFR-5.2** The preload script exposes only a small typed API.
-- **NFR-5.3** The hook server binds to `127.0.0.1`. It accepts only events carrying the random per-session token that Pi puts in the hook command.
+- **NFR-5.3** The hook server binds to `127.0.0.1`. It accepts only events carrying the random per-session token. Pi makes a new token at every launch and writes it, with the port, to a runtime file in its app-data folder with owner-only permissions (`0600`), so other users on the machine can't read it. Pi's hook script reads the token from that file and sends it with each event. The hook entries in `settings.json` don't change between sessions. *(Reworded 2026-11-25, Application Design clarification 1; it used to say the token is put in the hook command.)*
 - **NFR-5.4** Pi's agent has only read tools: `read`, `grep`, `find` and `ls`. Those tools refuse paths outside the repo and secret files (`.env*`, `*.pem`, `id_*`, `.git/`).
 - **NFR-5.5** Builder calls run `claude -p` with `--allowedTools Read,Grep,Glob` and `--permission-mode dontAsk`.
 - **NFR-5.6** Every hook payload, IPC message, model JSON output and lesson component is checked against a TypeBox schema. Bad input is logged and dropped.

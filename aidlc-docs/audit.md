@@ -308,3 +308,81 @@ Check for gaps or contradictions, then show me the plan for approval."
 **Context**: Workflow plan created with 7 stages to execute (Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Code Generation, Build and Test) and 2 skipped (Reverse Engineering, Infrastructure Design). Next stage: Application Design.
 
 ---
+## Session Resumption: Application Design
+**Timestamp**: 2026-11-25T00:23:30Z
+**User Input**: "Resume the AI-DLC workflow. Read aidlc-docs/aidlc-state.md and continue with Application Design."
+**AI Response**: "Read aidlc-state.md: Workflow Planning complete (approved 2026-11-24), Application Design next. Loaded common rules (session-continuity, question-format-guide, overconfidence-prevention), inception/application-design.md, and prior artifacts: requirements.md, stories.md, personas.md, execution-plan.md, docs/technical-environment.md, docs/assignment-requirements.md. Extension check: PBT (Partial) has no rules that apply at Application Design (its stage table starts at Functional Design), so PBT is N/A here. Security Baseline and Resiliency Baseline are disabled and skipped. Starting Application Design Steps 1-6: analyze context and write the design plan with questions."
+**Context**: INCEPTION - Application Design started (resumed from aidlc-state.md).
+
+---
+## Application Design - Plan and Questions Written
+**Timestamp**: 2026-11-25T00:31:00Z
+**User Input**: "(none; continuing from the session resumption above)"
+**AI Response**: "Wrote inception/plans/application-design-plan.md: scope (what is already decided and not reopened), a draft list of 18 candidate components (C1-C18) with process and job, 15 multiple-choice questions in five parts (A component identification and code organization: Q1 source layout, Q2 where a component type's parts live, Q3 Session Review vs Learning Record; B methods and contracts: Q4 how the agent produces a component, Q5 TutorModel scope, Q6 response path; C orchestration: Q7 coordinator, Q8 run scheduling, Q9 where Builder checks happen; D dependencies and communication: Q10 main-to-window IPC, Q11 hook command, Q12 dependency injection; E patterns and data: Q13 learning record storage, Q14 code snapshots, Q15 video separation), and an 11-step execution checklist with Steps 1-2 marked done. Updated aidlc-state.md current stage. Asked the team to fill the [Answer]: tags."
+**Context**: INCEPTION - Application Design, Steps 1-6. Waiting for answers.
+
+---
+## Application Design - Team Answers
+**Timestamp**: 2026-11-25T00:41:00Z
+**User Input**: "Fill in my answers in application-design-plan.md exactly as follows:
+
+Q1 A
+Q2 A
+Q3 C, End session already triggers an agent run to run the afters, and pure functions are pretty easy to property test
+Q4 A
+Q5 A
+Q6 B, but an agent run still starts after grading when the next step needs new content, so its not doing work outside our specified 3 circumstances
+Q7 A
+Q8 A
+Q9 C, and a card already confirmed with ask_builder isn't checked a second time, so it doesn't use two Builder calls
+Q10 C
+Q11 B, the script always exits 0 with no output and a hard timeout under 200 ms
+Q12 A
+Q13 A
+Q14 A, Bs bad cause it cant recover the old code once the file changes (FR-3.6)
+Q15 A
+
+Then check the answers for gaps and continue."
+**AI Response**: "Wrote the 15 answers verbatim after the [Answer]: tags in application-design-plan.md. Analyzed them (Step 8): one contradiction, Q11 B (token read from a runtime file) against NFR-5.3 and US-04 (token carried in the hook command). Wrote application-design-clarification-questions.md with Clarification Question 1 (A keep Q11 B and reword NFR-5.3/US-04; B Node script plus per-launch rewrite of Pi's entries with the token as an argument). Added an 'Answer analysis' table to the plan recording nine readings settled within the answers: per-type component folder as the cross-process exception (Q1/Q2), End session at Haiku cap shows the summary without an agent run (Q3/US-27), deterministic vs agent steps after a response (Q6), verification receipts with a question+key hash (Q9), no file watcher with a hash check at grading (Q14), only Builder hook triggers are merged (Q8), registry-built show_component union (Q4/Q15), budget decorator on TutorModel (Q5), missing-script entries still exit 0 (Q11). Marked plan Step 3 done. Did not generate design artifacts: the contradiction must be resolved first (Step 9)."
+**Context**: INCEPTION - Application Design, Steps 7-9. Waiting for Clarification Question 1.
+
+---
+## Application Design - Clarification Answer and Artifact Generation
+**Timestamp**: 2026-11-25T00:56:10Z
+**User Input**: "Fill in the clarification question with A: keep Q11 B and reword NFR-5.3 and US-04 to match. Add this condition: Pi writes the token file with owner-only permissions (0600) so other users on the machine can't read it, and Pi rotates the token every launch like before.
+
+I reviewed the six points you settled in the Answer analysis table and they're all fine as written. The ask_builder receipt hash is a good call.
+
+Go ahead and write the design files."
+**AI Response**: "Wrote answer A with the team's condition in application-design-clarification-questions.md. Reworded NFR-5.3 in requirements.md (token in a 0600 runtime file in Pi's app-data folder, new token every launch, read by the hook script; hook entries unchanged between sessions) with a dated note, and added a row to requirements §3. Reworded the US-04 token criterion in stories.md to match, with a dated note. Took the team's review of the answer analysis and 'Go ahead and write the design files' as plan approval (plan Step 4). Generated inception/application-design/: components.md (22 components C1-C22, source layout, decision table, story coverage for all 36 stories), component-methods.md (TypeScript signatures for every component, shared types, pure functions marked as PBT targets, table of rules left to Functional Design), services.md (six services S1-S6, run queue, cadence, response handling, End session with the Haiku-cap path, pipeline steps, patterns), component-dependency.md (seven dependency rules, core dependency matrix, full dependency table, communication channels, five Mermaid diagrams with text alternatives, test seams), application-design.md (consolidated overview, decisions D1-D14, requirement mapping, validation, extension compliance). Mermaid was checked by hand; no Mermaid CLI is installed. Validation: every story maps to a component; the four NFR-7.1 contracts are defined; no component writes to the student's repo. Extension compliance: PBT N/A at this stage; Security and Resiliency disabled and skipped. Marked plan Steps 4-11 done and updated aidlc-state.md."
+**Context**: INCEPTION - Application Design, Steps 9-12.
+
+---
+
+## Application Design - Approval Prompt
+**Timestamp**: 2026-11-25T00:56:10Z
+**AI Prompt**: "Application Design Complete. REVIEW REQUIRED: aidlc-docs/inception/application-design/. You may: Request Changes (ask for modifications to the application design) or Approve & Continue (approve the design and proceed to Units Generation)."
+**Context**: INCEPTION - Application Design, Step 12. Waiting for explicit approval.
+
+---
+## Application Design - Change Request and Approval
+**Timestamp**: 2026-11-25T01:09:24Z
+**User Input**: "change these things:
+
+1. overview in §5 shows C11 calling C10 but doesnt show the card coming back to C9, even though C9 is supposed to be the only writer to the feed. add the return path and add C17 event log to the diagram and its text version
+
+2. i validated all the mermaid diagrams with the mermaid parser (v11.4.1) and they all parse, 3 flowcharts and 3 sequence diagrams. update the validation section to say that instead of checked by hand, and recheck the §5 diagram after your edits
+
+After that, I approve the application design."
+**AI Response**: "Change 1: in application-design.md §5, added the dashed return path (C10 returns the card record to C11, C11 returns the run outcome with the card to C9), labeled C9 -> C18 'only writer to the feed', and added C17 Event Log with edges from C9, C11 and C10; updated the text alternative to match. Change 2: rewrote the §7 Diagrams bullet to say the team parsed all six diagrams (3 flowcharts, 3 sequence) with Mermaid v11.4.1. Rechecked after the edit by installing mermaid@11.4.1 in the session scratchpad and running mermaid.parse on every block in application-design.md and component-dependency.md: all six parse (flowchart-v2 x3, sequence x3); recorded the recheck in §7. The team approved the design once these changes were made, so the approval is recorded. Marked Application Design complete in aidlc-state.md and set the next stage to Units Generation."
+**Status**: Approved
+**Context**: INCEPTION - Application Design approved (Steps 13-15). Next stage: Units Generation.
+
+---
+## Team Request: Commit and Push
+**Timestamp**: 2026-11-25T01:15:31Z
+**User Input**: "yes, commit and push this checkpoint. pull first in case a teammate pushed anything."
+**AI Response**: "Pulled main from origin (fast-forward only): already up to date. Committed the Application Design checkpoint (design plan, clarification file, five application-design artifacts, NFR-5.3 and US-04 rewording, aidlc-state.md, audit.md) and pushed main to origin on GitHub. The team's request was taken as the confirmation needed for a push."
+**Context**: Between INCEPTION stages: Application Design approved, Units Generation next.
+
+---

@@ -111,7 +111,7 @@ Unless a criterion names another sample, the sample is 10 outputs from recorded 
 - [test] **Given** the hooks step, **when** it opens, **then** Pi shows the exact `PostToolUse`, `Stop` and `UserPromptSubmit` entries it will add to the user-level `~/.claude/settings.json`, and changes nothing until the student confirms.
 - [test] **Given** existing settings and hooks, **when** Sam confirms, **then** Pi adds only its own entries, and every other key and hook is unchanged. A property-based test merges random settings files.
 - [test] No file in the student's repo is created or changed.
-- [test] The hook command carries a per-session token (US-06).
+- [test] Each hook event carries this session's token (US-06). Pi's hook script reads the token from a runtime file in Pi's app-data folder. Pi writes that file with owner-only permissions (`0600`) and makes a new token at every launch. The hook entries in `settings.json` don't contain the token. *(Reworded 2026-11-25, Application Design clarification 1.)*
 - ⚠ [test] **Given** `settings.json` isn't valid JSON, **when** Sam confirms, **then** Pi doesn't write anything and tells Sam the file needs fixing first.
 - ⚠ [test] **Given** Sam cancels, **when** the step closes, **then** the file is byte-for-byte unchanged, and the step shows "not installed."
 

@@ -4,7 +4,7 @@
 - **Project Name**: Anti-Vibe Coding (Pi, the learning sidecar)
 - **Project Type**: Greenfield
 - **Start Date**: 2026-11-19T18:01:04Z
-- **Current Stage**: INCEPTION - Application Design (next; not started)
+- **Current Stage**: INCEPTION - Units Generation (next; not started)
 - **AI-DLC Version**: v1.0.1
 - **Input Documents**: `docs/founding-idea.md` (vision), `docs/technical-environment.md` (technical environment)
 
@@ -50,7 +50,7 @@
 - [x] Requirements Analysis (approved 2026-11-23; all 35 questions answered; five follow-up gaps closed; `inception/requirements/requirements.md`; depth Comprehensive)
 - [x] User Stories (approved 2026-11-24; plan `inception/plans/story-generation-plan.md` with 16 answers and 4 follow-ups; `inception/user-stories/stories.md` (33 core + 3 video stories, 2 journeys) and `personas.md` (3 personas, 2 anti-personas))
 - [x] Workflow Planning (approved 2026-11-24; `inception/plans/execution-plan.md`; 7 stages to execute, 2 skipped)
-- [ ] Application Design (EXECUTE: required by team)
+- [x] Application Design (approved 2026-11-25; plan `inception/plans/application-design-plan.md` with 15 answers and 1 clarification; `inception/application-design/`: components.md (22 components), component-methods.md, services.md (6 services), component-dependency.md, application-design.md; NFR-5.3 and US-04 reworded per clarification 1)
 - [ ] Units Generation (EXECUTE: required by team)
 
 ### 🟢 CONSTRUCTION PHASE
