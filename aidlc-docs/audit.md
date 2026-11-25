@@ -386,3 +386,181 @@ After that, I approve the application design."
 **Context**: Between INCEPTION stages: Application Design approved, Units Generation next.
 
 ---
+## Session Resumption: Units Generation
+**Timestamp**: 2026-11-25T01:29:25Z
+**User Input**: "Using AI-DLC, continue the workflow. Guide us through tasks/milestone-1-inception.md, one step at a time. Alex finished Application Design (commit 5346244), so we should be at Step 9, Units Generation. Standing rule for this stage: every time you update a document, check whether the change affects requirements.md, stories.md or the application design files, and tell us if it does."
+**AI Response**: "Read aidlc-state.md: Application Design complete (approved, committed and pushed as 5346244); Units Generation next and not started. Confirmed against audit.md and git log. Loaded common rules (session-continuity, question-format-guide, content-validation), inception/units-generation.md, the code-generation.md structure patterns, and prior artifacts: the five application-design files, execution-plan.md, stories.md (story list and sizes), README.md (five team members, collaboration plan). Extension check: PBT (Partial) has no rule at Units Generation (its stage table starts at Functional Design), so N/A; Security Baseline and Resiliency Baseline are disabled and skipped. Took the team's standing rule as an instruction for this stage: after every document update, report whether it affects requirements.md, stories.md or the application-design files."
+**Context**: INCEPTION - Units Generation started (resumed from aidlc-state.md). Milestone task list Step 9.
+
+---
+## Units Generation - Plan and Questions Written
+**Timestamp**: 2026-11-25T01:31:17Z
+**User Input**: "(none; continuing from the session resumption above)"
+**AI Response**: "Wrote inception/plans/unit-of-work-plan.md: scope (one Electron app, so every unit is a module; what is not reopened), a draft decomposition of seven units (U1 Foundation and Contracts, U2 Builder Pairing and Setup, U3 Tutor Agent and Card Pipeline, U4 Lesson Component Types, U5 Session and Learning Record, U6 Desktop Shell and UI, U7 Video, optional) covering all 36 stories, and 15 multiple-choice questions in six parts (A story grouping: Q1 decomposition, Q2 rule for stories that span units, Q3 where lesson types go; B dependencies: Q4 shared pieces, Q5 build order, Q6 when units first run together; C team: Q7 ownership, Q8 one-unit-at-a-time AI-DLC loop vs five teammates; D technical: Q9 end-to-end test and demo ownership, Q10 video timing, Q11 definition of done; E domain: Q12 where setup sits, Q13 orchestrator with learning record; F code organization: Q14 by-process layout (D1) vs code-generation.md src/{unit-name}/, Q15 test location), and a 13-step checklist with Steps 1-2 done. Impact check: the plan changes no requirement, story or design file. Q14 option B would change components.md, application-design.md (D1) and component-dependency.md if chosen. Updated aidlc-state.md current stage and the milestone task list. Asked the team to fill the [Answer]: tags."
+**Context**: INCEPTION - Units Generation Part 1, Steps 1-5. Waiting for answers.
+
+---
+## Units Generation - Team Answers
+**Timestamp**: 2026-11-25T01:41:05Z
+**User Input**: "Team answers for the unit plan. Write each one into its [Answer]: tag in unit-of-work-plan.md with the reason:
+
+Q1: A. The seven draft units follow Alex's approved components, so each unit owns clear folders. Seven small units of one to two days each fit the two-week window under Q8. The README's five workstreams will guide who owns which unit when we assign people (Q7).
+Q2: A. Map each story to the unit whose behavior its acceptance criteria check, and list the supporting units. This keeps "exactly one unit per story" honest.
+Q3: A. One unit owns the schema, grader and card for every type, so each type is built and tested as a whole. This matches the one-folder-per-type design.
+Q4: A, plus one addition: U1 also holds the interfaces (not the implementations) of TutorModel, Builder Bridge and Video Runner, because the shared fakes in test/fakes/ implement them. Then every later unit can be built against stable contracts in any order.
+Q5: A, with one change: after U1, build U3 (Tutor Agent and Card Pipeline) and U4 (Lesson Component Types) next, back to back, U3 first. Answer-key quality (AC-4, 90% correct) is our biggest risk, and it depends on both the agent and the card types it fills. Building them early gives us the most time to fix it. Then U2, U6, U5, and video last.
+Q6: A. Join units into the running app as soon as two are done, so connection problems show up early instead of in the last days.
+Q7: B. Name the skills each unit needs now. The team assigns an owner and a reviewer for each unit at the first Construction meeting, as the README's collaboration plan says. One constraint to record for those assignments: Alex doesn't have a Mac. Pi targets macOS (NFR-6.1) and video needs a Mac with a Metal GPU (FR-7.2). So Alex shouldn't own U7 Video, and any unit he owns needs a reviewer with a Mac who runs the real-app and live checks (Q11). Units that are mostly tested with fakes, like U1 Foundation, U4 Card Types and the learning-record rules in U5, suit him best.
+Q8: A. Keep the one-unit-at-a-time rule. Writing code on side branches outside the workflow would leave the record incomplete. Keep each loop to one or two days. While one unit is in the loop, teammates review and test the unit before it and prepare the answers for the next one.
+Q9: B. Build and Test covers the end-to-end test and the AC checks. The demo chat app is built live during the demo (AC-1), so it isn't code we write ahead of time. Add a "testing and demo" role to unit-of-work.md, assigned with the unit owners (Q7), so this work has an owner from the start.
+Q10: A, cutoff 2026-12-10. Video is built last, and only if every core unit is approved by then. That leaves time for the demo video and presentation before Dec 16.
+Q11: C. Tests with fakes and a run in the real app aren't enough for the tutor unit. AC-4 can only be checked against the real Haiku model, so any unit that calls Haiku or claude -p also gets a live check.
+Q12: A. Setup checks and the hook installer stay with pairing (U2). US-02 stays in U6 as in the draft, because its acceptance criteria check what the setup screen shows. U2 is its supporting unit.
+Q13: A. The orchestrator is the only writer to the record, and End session needs both. Splitting them would add another unit loop to a tight two-week schedule.
+Q14: A. Keep Alex's approved by-process layout. unit-of-work.md lists the folders each unit owns. No design changes.
+Q15: A. Tests go next to the code, shared fakes and fixtures stay in test/, and the end-to-end test goes in test/e2e/.
+
+Check for gaps or contradictions, then show us the plan for approval."
+**AI Response**: "Wrote the 15 answers with their reasons after the [Answer]: tags in unit-of-work-plan.md. Analyzed them (Step 4) against each other, requirements.md (AC-1, AC-4, NFR-6.1, NFR-8.2, FR-7.2) and the design files. Found two contradictions and one gap, and wrote unit-of-work-clarification-questions.md: Clarification 1, U1 owning the TutorModel, BuilderBridge and VideoRunner interfaces (Q4) while those sit in U3's and U7's folders and Q14 says no design changes (A keep files in place with file-level ownership; B new src/main/contracts/ folder, a design change; C VideoRunner stays with U7). Clarification 2, Q11 C's real-app check vs the Q5 order, where U3 and U4 finish before the orchestrator, hook server and window exist (A nearest entry point now and full-app recheck when U5 joins; B move U5 to third after U3 and U4; C done pending the app check). Clarification 3, U3's live AC-4 check needs U4's exercise types (A U3 live check with a test-only type and full AC-4 review at the end of U4; B U3 done only after AC-4 passes; C swap U4 before U3). Added an Answer analysis section to the plan with the three issues and six readings settled without a question (R1 which units get live checks, including claude auth status and make-video; R2 live checks go in the opt-in live suite per NFR-8.2; R3 the Alex notes are guidance and U5 stays one unit; R4 journeys and AC checks map to Build and Test; R5 schedule check against the 2026-12-10 cutoff; R6 US-02 in U6 with U2 supporting). Marked plan Step 3 done. Did not ask for plan approval: Step 4 requires the clarifications first. Impact check: no change to requirements.md, stories.md or the design files. Clarification 1 option B would change components.md and component-methods.md."
+**Context**: INCEPTION - Units Generation Part 1, Steps 6-8. Waiting for Clarification Questions 1-3.
+
+---
+## Units Generation - Clarification Answers (Round 1)
+**Timestamp**: 2026-11-25T01:46:29Z
+**User Input**: "Answers to the three clarification questions. Write each one into its [Answer]: tag in unit-of-work-clarification-questions.md with the reason:
+
+CQ1: C. U1 holds the TutorModel and BuilderBridge interfaces in their approved files (src/main/tutor/tutor-model.ts and src/main/builder-bridge/builder-bridge.ts). VideoRunner and FakeVideoRunner stay entirely in U7. Video is optional and may be dropped at the Dec 10 cutoff, so keeping all of it in U7 means dropping it touches no other unit. No design change.
+
+CQ2: B, with A's check for the units built before U5. Final build order: U1, U4, U3, U5, U2, U6, U7 (CQ3 explains U4 before U3). U4 and U3 are checked through their nearest working entry point when they finish: the registry for U4, and a recorded hook fixture into the Tutor Agent for U3. U5 comes right after them, so the full-app check for both runs one unit later, and a failure there reopens whichever unit caused it. Moving U5 up gets the core teaching loop running end to end by the fourth unit, and the hooks and window then plug into a core that already works.
+
+CQ3: C. Build U4 before U3. Then the exercise types exist when U3 is built, so U3's live check can be the full AC-4 review (20 exercises, 90% correct) instead of a test-only stand-in. Both units still come right after U1, so the answer-key risk is still handled early.
+
+We reviewed readings R1 to R6 and accept all six. We'll treat R5's Construction start window as a schedule risk and confirm the start date at our first Construction meeting.
+
+Check the answers once more, then show us the plan for approval."
+**AI Response**: "Wrote the three answers with their reasons after the [Answer]: tags in unit-of-work-clarification-questions.md. Recorded the team's acceptance of R1-R6 and the R5 schedule-risk note in the plan's Answer analysis, with a Clarification outcomes table (CQ1 C, CQ2 B with A's check, CQ3 C; build order U1, U4, U3, U5, U2, U6, U7). Rechecked the answers against component-methods.md: they agree with each other and with Q1-Q15, but the new order opens two gaps, because U4 and U3 now need code from units built after them. Appended round 2 to the clarification file: Clarification 4, U4's live grader check (R1) needs the real PiTutorModel, which is C12 in U3 (A move the check into U3's loop; B move PiTutorModel and BudgetedTutorModel into U1; C drop U4's live check and rely on U5 and AC-3). Clarification 5, U3's recorded-fixture check and U5 need C8 Builder Events (toBuilderEvent, mergeActivity, readTurnDetails), which is in U2, built fifth (A move C8 to U1; B move C8 to U3; C keep C8 in U2 with hand-written triggers and an AC-4 rerun once U2 lands). Did not ask for plan approval: Step 4 requires the round-2 clarifications first. Impact check: no change to requirements.md, stories.md or the design files. All five options in round 2 move components between units or move checks, not design content. Clarification 4 B would give U1 a real implementation, against Q4's 'interfaces, not implementations', so it would be noted in unit-of-work.md."
+**Context**: INCEPTION - Units Generation Part 1, Step 8 (round 2). Waiting for Clarification Questions 4-5.
+
+---
+## Units Generation - Clarification Answers (Round 2) and Decision Rule
+**Timestamp**: 2026-11-25T01:53:27Z
+**User Input**: "Answers to round 2. Write each one into its [Answer]: tag in unit-of-work-clarification-questions.md with the reason:
+
+CQ4: A. Move U4's live grader check into U3's loop, and a failure there reopens U4. U3 builds the real PiTutorModel and already runs the full AC-4 review against Haiku, so both live grading checks run where the real model first exists. This keeps Q4's rule that U1 holds interfaces, not implementations.
+
+CQ5: A. Move C8 Builder Events to U1. It is a pure translator from hook payloads to agent triggers, and every unit downstream of the hooks needs it (U3's fixture check, U5, U2). Having it in the foundation also means the AC-4 review runs on real recorded hook fixtures from the start, not hand-written triggers. US-06 and US-03 stay in U2, with U1 as a supporting unit.
+
+Decision rule for any remaining case of this kind: if a unit needs code from a unit built after it, move pure shared translators and contracts to U1, and run live checks in the loop of the unit that builds the real dependency. Record each such move in the Answer analysis instead of opening another round.
+
+Check the answers once more, then show us the plan for approval.
+
+ provide a quick summary of the changes that were made."
+**AI Response**: "Wrote the two answers with their reasons after the [Answer]: tags in unit-of-work-clarification-questions.md (all five clarifications now answered). Rechecked every unit in build order (U1, U4, U3, U5, U2, U6, U7) for code it needs from a later unit, and applied the team's decision rule without opening a new round. Recorded in the plan: round-2 outcomes (CQ4 A, CQ5 A); the decision rule; moves M1 (U4 live grader check runs in U3's loop), M2 (C8 to U1), M3 (FileSystem, SpawnFn and Clock interfaces and their fakes to U1, since the design gives them no owner), M4 (U1 owns test/fixtures/hooks/), M5 (U1 builds the createApp skeleton; each later unit adds its own wiring to src/main/app.ts when it joins); and cases checked with no move needed (FeedSink defined in U5 and implemented by U6 later; U2's live API key check after U3; U6 and U7 depend only on earlier units). Added a Final decomposition section (build order, components, draft stories and live checks per unit, 36 stories) and marked the opening draft as replaced. Marked plan Step 4 done. Impact check: no change to requirements.md, stories.md or the application-design files; M1-M5 decide which unit builds a file, not what it contains."
+**Context**: INCEPTION - Units Generation Part 1, Steps 7-8 complete.
+
+---
+## Units Generation - Plan Approval Prompt
+**Timestamp**: 2026-11-25T01:53:27Z
+**AI Prompt**: "Unit of work plan complete. Review the plan in aidlc-docs/inception/plans/unit-of-work-plan.md. Ready to proceed to generation?"
+**Context**: INCEPTION - Units Generation Part 1, Step 9. Waiting for explicit approval.
+
+---
+## Units Generation - Team Question Before Plan Approval
+**Timestamp**: 2026-11-25T01:59:06Z
+**User Input**: "Do not update any documents except audit.md. Before we approve, give us a short plain-English overview of what each unit covers. Also tell us whether any unit looks too big for the one-to-two-day loop we set in Q8. We're especially concerned about U1: after the moves it holds about ten pieces (C1, C2, C3, C8, C16, C17, the wiring skeleton, the interfaces, the fakes and the hook fixtures) for only two stories. Log this question and your answer in audit.md."
+**AI Response**: "Answered in chat only; no document other than audit.md changed, and the plan is not approved yet. Gave a plain-English overview of U1-U7. Sizing from the story sizes in stories.md: U1 2S; U4 4S 3M; U3 3S 4M; U5 5S 3M; U2 4S 2M; U6 1S 1M 1L; U7 1S 1M 1L. Finding: story sizes understate U1, because most of its work has no story. As the first unit it also has to set up the project itself (Electron Forge with Vite, TypeScript projects per process, the lint rules for process boundaries, Vitest and fast-check), on top of about ten pieces, several with property tests (C3 round-trips, C8, C16). Recording real hook fixtures also needs a temporary hand-made hook, because the installer comes in U2. U1 is the unit most likely to overrun the one-to-two-day loop, and it is on the critical path, since every later unit waits for it. U3 is the second risk: 4M stories plus the AC-4 review (20 exercises, 90%) and U4's live grader check, where prompt fixes are open-ended. U4 and U5 are full two-day loops. U2 and U6 fit. U7 is optional. Options given for U1, with no decision taken: (1) split U1 into two loops, U1a Project skeleton and contracts (setup, C1, C2, interfaces, FileSystem/SpawnFn/Clock, fakes, the C22 skeleton) and U1b Shared core (C3, C8 with the hook fixtures, C16, C17); this adds one loop without adding total work, and U4 starts after U1b; (2) move C16 Budget Ledger to U3, where its story US-27 and both its first users (BudgetedTutorModel, Builder Bridge) already are; this follows the decision rule, since C16 is an implementation, not a contract, but it makes U3 bigger; (3) keep U1 whole and plan it as a known two-to-three-day loop. Recommended option 1. For U3, suggested either accepting a longer loop or timeboxing the AC-4 prompt fixes. Said that any change would be recorded in the plan once the team chooses and allows document updates, and that the impact check stays the same: none of these options change requirements.md, stories.md or the application-design files."
+**Context**: INCEPTION - Units Generation Part 1, Step 9. Team question before approving the plan. Plan approval still pending.
+
+---
+## Units Generation - Team Changes Before Approval
+**Timestamp**: 2026-11-25T02:06:00Z
+**User Input**: "Go with option 1: split U1 into U1a (Project skeleton and contracts) and U1b (Shared core) as you described, and update the plan. Reason: smaller loops give the AI a smaller context and give us an approval checkpoint before everything else builds on U1. U1a has almost no business logic, so it can likely skip Functional Design, as the execution plan allows, which keeps the extra loop cheap. Keep the names U1a and U1b so the other unit numbers don't change. Final order: U1a, U1b, U4, U3, U5, U2, U6, U7.
+
+For U3, set a time limit: prompt fixes for AC-4 get two working days after U3's code is generated. If AC-4 is still below 90% by then, we record the score in audit.md, move on to U5, and rerun AC-4 in Build and Test after more prompt fixes made through the workflow as U3 changes. AC-4 itself doesn't change.
+
+Update R5's schedule check for the extra loop, record these changes, and ask us for approval again."
+**AI Response**: "Updated unit-of-work-plan.md with a new section 'Team changes before approval (2026-11-25)'. Change 1: U1 split into U1a Project Skeleton and Contracts (project setup, C1, C2, TutorModel and BuilderBridge interfaces, FileSystem/SpawnFn/Clock, fakes, C22 createApp skeleton; US-33) and U1b Shared Core (C3, C8 with the hook fixtures, C16, C17; US-32). U1b depends only on U1a, and U4 starts after U1b. M1-M5 and CQ1 still apply. U1a is expected to skip Functional Design, which the execution plan allows; the choice is made when U1a starts. Recording fixtures needs a temporary hand-made hook entry, removed after use. Change 2: two working days after U3's code generation for AC-4 prompt fixes. Below 90% at the limit: record the score in audit.md, move on to U5, rerun AC-4 in Build and Test after more prompt fixes made as U3 changes. AC-4 is unchanged. Recorded this as a U3-only exception to Q11 C, and noted that prompts live in C1 (U1a's file) but AC-4 prompt fixes are made and approved as U3 work. Change 3: R5 updated. Seven core loops take 7-14 working days, up to 16 with the AC-4 limit. Weekdays from 2026-11-25 (checked with the system calendar): 12 to the 2026-12-10 cutoff, 16 to the 2026-12-16 deadline, with Thanksgiving counted as working days (10 and 14 without them). So loops must average about one and a half days to reach the video cutoff, the best case needs a start by 2026-12-02, and the worst case leaves no time for Build and Test or the demo before 2026-12-16. This is recorded as a schedule risk; the start date is confirmed at the first Construction meeting. Marked the old R5 as replaced. Rewrote the Final decomposition: build order U1a, U1b, U4, U3, U5, U2, U6, U7; eight units (seven core, one optional); 36 stories, each in one unit. Impact check: no change to requirements.md, stories.md or the application-design files. AC-4's wording is unchanged; only when it is checked for U3 changes. Asked for plan approval again."
+**Context**: INCEPTION - Units Generation Part 1, Step 9. Plan revised before approval.
+
+---
+## Units Generation - Plan Approval Prompt (revised plan)
+**Timestamp**: 2026-11-25T02:06:00Z
+**AI Prompt**: "Unit of work plan complete. Review the plan in aidlc-docs/inception/plans/unit-of-work-plan.md. Ready to proceed to generation?"
+**Context**: INCEPTION - Units Generation Part 1, Step 9. Waiting for explicit approval of the revised plan.
+
+---
+## Units Generation - Plan Approval
+**Timestamp**: 2026-11-25T02:07:08Z
+**User Input**: "Approve the plan. Proceed to generation."
+**AI Response**: "Recorded the approval of unit-of-work-plan.md (revised plan, eight units, build order U1a, U1b, U4, U3, U5, U2, U6, U7). Marked plan Step 5 and Units Generation Part 1 (Planning) complete in aidlc-state.md. Starting Part 2 (Generation), plan Steps 6-13."
+**Status**: Approved
+**Context**: INCEPTION - Units Generation Part 1, Steps 10-11. Moving to Part 2.
+
+---
+## Units Generation - Part 2 Generation
+**Timestamp**: 2026-11-25T02:13:06Z
+**User Input**: "keep going" (after "Approve the plan. Proceed to generation.", logged above; the turn was briefly interrupted by the user while the agent was reading component-methods.md, and resumed with this message)
+**AI Response**: "Executed plan Steps 6-13. Read the acceptance criteria of all 36 stories and the relevant signatures in component-methods.md (AgentRunContext, RecordSummaryForAgent, CardProps, FeedSink). Generated inception/application-design/unit-of-work.md: eight units in build order U1a, U1b, U4, U3, U5, U2, U6, U7 (optional), with purpose, responsibilities, stories, live check, nearest-entry or app check, property-test targets and skills per unit; rules for every unit (Q2, Q8, Q11 C with the U3 AC-4 time limit, R1-R2, decision rule); team roles with the testing and demo role and the Q7/R3 constraints; the code organization strategy (by-process layout kept per Q14 A, a folder-ownership table, four file-level ownership cases, src/main/app.ts as the one shared edit point per M5, tests per Q15 A); the updated R5 schedule risk; validation. Generated unit-of-work-dependency.md: dependency rules, a unit dependency matrix (all below the diagonal, so no backward dependency), what each unit uses from earlier units, a contract-owner table, integration points per unit (how it joins createApp and its check), the critical path, and a Mermaid flowchart with a text alternative, parsed with Mermaid v11.4.1 (flowchart-v2). Generated unit-of-work-story-map.md: all 36 stories, each in exactly one unit by the Q2 rule, with supporting units and criteria checked in a later loop; stories per unit (U1a 1, U1b 3, U4 7, U3 6, U5 8, U2 6, U6 2, U7 3; sizes total 20 S, 14 M, 2 L, matching stories.md); journeys J1-J2 and AC-1 to AC-6 under Build and Test (R4). Changes from the plan's draft story list, from applying Q2 to the criteria: US-13 moved from U6 to U1b (four of six criteria check the registry), US-27 moved from U3 to U1b (cap values and accounting are C16); both flagged for team review. Two more cases settled under the team's decision rule and recorded in the plan as M6 (US-12's diagnose-first and explain-first criteria are checked in U5's loop) and M7 (U1a owns the RecordSummaryForAgent type in src/main/learning-record/agent-summary.ts), plus file placements: the M3 interfaces in src/main/ports.ts, and C10's files in src/main/session/ owned by U3. Validated with a script: 36 unique stories in the map, the same IDs as stories.md, per-unit counts add up. Fixed three errors found during self-review before validating (the 'three stories moved' count, US-29 missing from U6's list in unit-of-work.md, and supporting units missing for US-11 and US-28). Marked plan Steps 6-13 done. Impact check: no change to requirements.md, stories.md or the application-design files. ports.ts and agent-summary.ts are file placements the design didn't specify; they add no component and change no folder."
+**Context**: INCEPTION - Units Generation Part 2, Steps 12-16.
+
+---
+## Units Generation - Approval Prompt
+**Timestamp**: 2026-11-25T02:13:06Z
+**AI Prompt**: "Units Generation Complete. REVIEW REQUIRED: aidlc-docs/inception/application-design/ (unit-of-work.md, unit-of-work-dependency.md, unit-of-work-story-map.md). You may: Request Changes (ask for modifications to the units generation) or Approve & Continue (approve units and proceed to CONSTRUCTION PHASE). Milestone note: for this milestone, approve and tell the agent to stop before Construction."
+**Context**: INCEPTION - Units Generation, Step 16. Waiting for explicit approval.
+
+---
+## Units Generation - Change Request: Dropped U7
+**Timestamp**: 2026-11-25T02:17:07Z
+**User Input**: "Request changes: one gap. U7 is optional and may be dropped at the Dec 10 cutoff, but the story map checks some criteria of four core stories in U7's loop: US-07 (the loop survives a video runner failure), US-09 (the make-video spawn), US-27 (the video cap) and US-28 (a video runner failure doesn't stop the loop). If U7 is dropped, those four stories could never be marked done, which contradicts unit-of-work.md saying that dropping U7 changes no other unit. Add a rule to unit-of-work-story-map.md: if U7 is dropped, those video-only criteria are recorded as not applicable, and the stories close without them. Apply the same rule anywhere else a core story depends on U7.
+
+We also reviewed the two story moves and accept them: US-13 and US-27 go to U1b, which follows our Q2 rule.
+
+Make the change, run the impact check, and ask us for approval again."
+**AI Response**: "Recorded the team's acceptance of the US-13 and US-27 moves to U1b. Searched the story map and stories.md for every core-story criterion that depends on video. Added a 'Rule for a dropped U7' section to unit-of-work-story-map.md: if U7 is dropped, the video-only criteria are recorded as not applicable and the stories close without them, with the drop and each criterion logged in audit.md. A table lists the criteria: US-07 (video runner failure), US-09 (the make-video spawn, and one the map had missed: offer_video in the tool list with videos on), US-27 (video cap enforced when a video is reserved; video work uses the student's Claude plan; the 3-video value and its accounting stay checked in U1b), US-28 (video runner failure). Recorded three checked places that don't depend on U7 (US-27's cap value, US-31's video count in the metrics, US-02's 'setup doesn't check video'). Marked the four rows 'not applicable if U7 is dropped' and rewrote the validation bullet. Updated unit-of-work.md (U7 section, a new row in Rules for every unit, the Validation 'video is a leaf' line) and unit-of-work-dependency.md (rule 3) to point to the new rule. Found one more dependency the rule doesn't cover, because it isn't a story: AC-5's 'turning videos on shows what is missing' and journey J2 step 5 need C21's checkRequirements (U7). Appended Round 3 to unit-of-work-clarification-questions.md with Clarification Question 6 (A apply the same rule, which needs dated notes on AC-5 in requirements.md and J2 in stories.md; B build US-V1's requirement check even if U7 is dropped, which changes the unit files). Impact check: no change to requirements.md, stories.md or the application-design files so far. CQ6 A would add dated notes to requirements.md (AC-5) and stories.md (J2). CQ6 B would split U7 and change the build order and the story map, but no requirement or design file."
+**Context**: INCEPTION - Units Generation, Step 17 (change request). Waiting for Clarification Question 6, then approval.
+
+---
+## Units Generation - Clarification Answer (Round 3) and Re-approval Prompt
+**Timestamp**: 2026-11-25T02:19:07Z
+**User Input**: "CQ6: A. Apply the same rule to AC-5 and J2, with dated notes in requirements.md and stories.md. If U7 is dropped, Pi has no video setting at all, so \"turning videos on shows what is missing\" has nothing to test. The first half of AC-5, a clean machine without the video runner running the full demo flow, stays fully required. That's the part our stories called our biggest demo risk. Option B would add another loop to a schedule that is already tight (R5).
+
+Make the change, report the edits, and ask us for approval again."
+**AI Response**: "Wrote the answer with its reason after the CQ6 [Answer]: tag. Requirement and story edits (reported to the team): requirements.md AC-5 got a dated note (the first half is always required; 'turning videos on shows what is missing' applies only if U7 is built, otherwise recorded as not applicable in audit.md), and requirements §3 got a change row citing Units Generation Clarification Question 6. stories.md J2 got a dated note under the journey table, and step 5 now points to it. No acceptance criterion of any story changed. Unit file edits: the story map's dropped-U7 section now covers AC-5 and J2 (CQ6 A), and its Build and Test rows for AC-5 and J2 and its validation bullet are updated. unit-of-work.md (U7 section, Validation) and unit-of-work-dependency.md (rule 3) were updated to match. Added reading R7: the team's answer says that with U7 dropped Pi has no video setting, but unit-of-work.md had the toggle in U6 'idle until U7', which would leave a toggle that does nothing. So U6 shows the video toggle only when the video plug-in is in the build, checked in U6's loop. This follows components.md C20 ('videos toggle (shown only to start C21's checks)'), so no design file changes. Impact check: requirements.md and stories.md changed as above, at the team's direction. The application-design files are unchanged."
+**Context**: INCEPTION - Units Generation, Step 17. Change request applied.
+
+---
+**AI Prompt**: "Units Generation Complete. REVIEW REQUIRED: aidlc-docs/inception/application-design/ (unit-of-work.md, unit-of-work-dependency.md, unit-of-work-story-map.md). You may: Request Changes or Approve & Continue (approve units and proceed to CONSTRUCTION PHASE). Milestone note: approve and tell the agent to stop before Construction."
+**Context**: INCEPTION - Units Generation, Step 16 (repeated after the change request). Waiting for explicit approval.
+
+---
+## Units Generation - Approval
+**Timestamp**: 2026-11-25T02:20:39Z
+**User Input**: "We confirm reading R7: the video toggle shows only when the video plug-in is in the build, and U6's loop checks that it's absent otherwise. Approve. Stop here. Do not start Construction."
+**AI Response**: "Recorded the team's confirmation of reading R7 and their approval of the units generation artifacts (unit-of-work.md, unit-of-work-dependency.md, unit-of-work-story-map.md: eight units in build order U1a, U1b, U4, U3, U5, U2, U6, U7 optional; 36 stories, each mapped to one unit). Marked Units Generation complete in aidlc-state.md. Following the team's instruction and the milestone stop point, did not enter the Construction phase and wrote no application code. Next in the milestone task list: Step 10, the final record check."
+**Status**: Approved
+**Context**: INCEPTION - Units Generation complete (Steps 17-19). INCEPTION phase complete. Construction not started (milestone stop point).
+
+---
+## Units Generation - Approval and Stop Before Construction
+**Timestamp**: 2026-11-25T02:22:14Z
+**User Input**: "We confirm reading R7: the video toggle shows only when the video plug-in is in the build, and U6's loop checks that it's absent otherwise. Approve. Stop here. Do not start Construction."
+**AI Response**: "Recorded the team's confirmation of reading R7 and its approval of the units generation (unit-of-work.md, unit-of-work-dependency.md, unit-of-work-story-map.md: eight units, U1a, U1b, U4, U3, U5, U2, U6, U7 optional; 36 stories each mapped to one unit). Marked Units Generation complete in aidlc-state.md. Following the team's instruction and the milestone stop point (.claude/CLAUDE.md, Run Scope), Construction was not started: no Functional Design, no plans, no application code. Next is milestone task Step 10 (final record check)."
+**Status**: Approved
+**Context**: INCEPTION - Units Generation complete (Steps 18-19). INCEPTION phase complete. Stopped at the milestone point; CONSTRUCTION not started.
+
+---
+## Audit Note - Duplicate Approval Entry
+**Timestamp**: 2026-11-25T02:22:49Z
+**User Input**: "(none; record-keeping note)"
+**AI Response**: "The two entries above, 'Units Generation - Approval' (2026-11-25T02:20:39Z) and 'Units Generation - Approval and Stop Before Construction' (2026-11-25T02:22:14Z), record **one** team approval: the same user message, logged twice. The first was written by another process working on this repo at the same time, most likely a second agent session given the same prompt. It also updated aidlc-state.md and tasks/milestone-1-inception.md. This session's edit of those two files stopped before writing, so each holds one correct version. Both audit entries are kept, because audit.md is only appended to. Count them as a single approval. No other session was running when this was checked."
+**Context**: INCEPTION - Units Generation complete. Record-keeping only; no stage change.
+
+---
+## Audit Correction - Cause of the Duplicate Approval Entry
+**Timestamp**: 2026-11-25T02:25:28Z
+**User Input**: "Before committing, correct the audit note about the duplicate approval. It wasn't a second session. I sent the approval in this session, then sent the Step 10 prompt, then rewound the conversation to before the Step 10 prompt and sent the approval again. Rewinding restored the chat but not the files, so the first approval was already in audit.md. Add a short correction entry to audit.md that says this, without editing the earlier entries. Then commit the Units Generation checkpoint and push to GitHub."
+**AI Response**: "Correction to 'Audit Note - Duplicate Approval Entry' above: the cause was not a second session. The team sent the approval in this session (logged at 2026-11-25T02:20:39Z, with aidlc-state.md and the task list updated), then sent the Step 10 prompt, then rewound the conversation to before the Step 10 prompt and sent the same approval again (logged at 2026-11-25T02:22:14Z). Rewinding restored the chat but not the files, so the first approval was already in audit.md. The two entries are still one approval. Earlier entries are left unedited. Checked that the rewound Step 10 turn left nothing behind: no Step 10 audit entry, no change to docs/mid-semester-milestone.md, Step 10 unchecked in the task list."
+**Context**: INCEPTION - Units Generation complete. Record-keeping correction before the checkpoint commit.
+
+---

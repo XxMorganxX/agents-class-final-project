@@ -64,9 +64,11 @@ Unless a criterion names another sample, the sample is 10 outputs from recorded 
 | 2 | Pi launches without a key in `.env`. It says so and explains how to add one. Sam adds the key and relaunches | US-01 |
 | 3 | The setup screen walks Sam through four steps, each with pass or fail | US-02 |
 | 4 | Sam picks the demo repo and sees the exact hook entries Pi will add. They confirm, and their own hooks stay as they were | US-03, US-04 |
-| 5 | Sam turns videos on. Pi names the missing requirement and leaves videos off. The demo runs fully without video | US-V1 |
+| 5 | Sam turns videos on. Pi names the missing requirement and leaves videos off. The demo runs fully without video | US-V1 (see note) |
 | 6 | Sam closes Pi and runs Claude Code. The hooks exit at once, with no error and no delay | US-07 |
 | 7 | Sam reopens Pi and presses **Remove Pi hooks**. `~/.claude/settings.json` matches the backup exactly | US-05 |
+
+*Note (2026-11-25, Units Generation Clarification Question 6):* step 5's "Sam turns videos on. Pi names the missing requirement and leaves videos off" applies only if the optional video unit (U7) is built. If U7 is dropped, Pi has no video setting, so that part is recorded as not applicable. "The demo runs fully without video" always applies, as in AC-5.
 
 ---
 

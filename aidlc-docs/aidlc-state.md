@@ -4,7 +4,7 @@
 - **Project Name**: Anti-Vibe Coding (Pi, the learning sidecar)
 - **Project Type**: Greenfield
 - **Start Date**: 2026-11-19T18:01:04Z
-- **Current Stage**: INCEPTION - Units Generation (next; not started)
+- **Current Stage**: INCEPTION complete (Units Generation approved 2026-11-25). Stopped at the milestone stop point; CONSTRUCTION not started
 - **AI-DLC Version**: v1.0.1
 - **Input Documents**: `docs/founding-idea.md` (vision), `docs/technical-environment.md` (technical environment)
 
@@ -51,7 +51,7 @@
 - [x] User Stories (approved 2026-11-24; plan `inception/plans/story-generation-plan.md` with 16 answers and 4 follow-ups; `inception/user-stories/stories.md` (33 core + 3 video stories, 2 journeys) and `personas.md` (3 personas, 2 anti-personas))
 - [x] Workflow Planning (approved 2026-11-24; `inception/plans/execution-plan.md`; 7 stages to execute, 2 skipped)
 - [x] Application Design (approved 2026-11-25; plan `inception/plans/application-design-plan.md` with 15 answers and 1 clarification; `inception/application-design/`: components.md (22 components), component-methods.md, services.md (6 services), component-dependency.md, application-design.md; NFR-5.3 and US-04 reworded per clarification 1)
-- [ ] Units Generation (EXECUTE: required by team)
+- [x] Units Generation (approved 2026-11-25; plan `inception/plans/unit-of-work-plan.md` with 15 answers, 6 clarifications in three rounds and the team changes before approval; `inception/application-design/`: unit-of-work.md (8 units: U1a, U1b, U4, U3, U5, U2, U6, U7 optional), unit-of-work-dependency.md, unit-of-work-story-map.md (36 stories, each in one unit); AC-5 and J2 notes added per clarification 6)
 
 ### 🟢 CONSTRUCTION PHASE
 Not started. Out of scope for this run (milestone stop point is after Units Generation). Planned:

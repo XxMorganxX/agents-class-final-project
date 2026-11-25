@@ -41,6 +41,7 @@ The team changed these points during Requirements Analysis. The founding idea do
 | tech-env §7 keeps data in `.pi-sidecar/` (location unstated) | Pi's own app-data folder, never the student's repo | Q13, Q28 |
 | tech-env §5 recorded hook fixtures | Kept for automated tests. No replay mode for the demo | Q35 |
 | NFR-5.3 (this document): token put in the hook command | Token in a `0600` runtime file that Pi rewrites at each launch; the hook script reads it. Hook entries stay the same between sessions (helps FR-1.7 and AC-6) | Application Design Q11 and clarification 1, 2026-11-25 |
+| AC-5 (this document): "turning videos on shows what is missing" always required | Required only if the optional video unit (U7) is built. The first half of AC-5 (the demo runs without the video runner) is always required | Units Generation Clarification Question 6, 2026-11-25 |
 
 The README's scope section was updated on 2026-11-23 to match these changes. `founding-idea.md` is unchanged.
 
@@ -262,6 +263,7 @@ The README's scope section was updated on 2026-11-23 to match these changes. `fo
 - **AC-3 End to end:** in one session on the demo app, every MVP component type that responds to the student appears at least once. The before-and-after check runs end to end, nothing crashes, and the automated tests pass. (Q34)
 - **AC-4 Answer-key quality:** teammates hand-review 20 exercises generated from recorded hook fixtures. At least 90% have a correct answer key for the actual code. (Q34)
 - **AC-5 Works without videos:** a clean machine without the video runner runs the full demo flow, and turning videos on shows what is missing.
+  *Note (2026-11-25, Units Generation Clarification Question 6):* the first half (the full demo flow runs on a clean machine without the video runner) is always required. The second half ("turning videos on shows what is missing") applies only if the optional video unit (U7) is built. If U7 is dropped at the 2026-12-10 cutoff, Pi has no video setting, so the second half is recorded as not applicable in `audit.md`.
 - **AC-6 Clean install:** following the README on a fresh clone, a teammate gets through the setup screen (FR-8), and removing Pi's hooks leaves `~/.claude/settings.json` exactly as it was before installing.
 
 ## 8. Out of scope

@@ -50,21 +50,21 @@
 **Done when** the commit exists and a fresh session has resumed at Application Design.
 
 ### Step 7: Application Design
-- [ ] The agent writes the design plan and its question file. The team's more technical members lead these answers, since they decide how the code is organized and tested.
-- [ ] Answer every `[Answer]:` tag.
-- [ ] Review the design files in `application-design/` and approve them.
+- [x] The agent writes the design plan and its question file. The team's more technical members lead these answers, since they decide how the code is organized and tested.
+- [x] Answer every `[Answer]:` tag. (15 answers and 1 clarification)
+- [x] Review the design files in `application-design/` and approve them. (approved after two team changes, 2026-11-25 UTC)
 
 **Done when** the design files exist, the team has approved them, and `aidlc-state.md` marks Application Design complete.
 
 ### Step 8: Checkpoint and reset
-- [ ] Commit the checkpoint, then reset the context.
+- [x] Commit the checkpoint, then reset the context. (commit `5346244`, pushed)
 
 **Done when** the commit exists and a fresh session has resumed at Units Generation.
 
 ### Step 9: Units Generation
-- [ ] Answer the units question file.
-- [ ] Review `application-design/unit-of-work.md`, `unit-of-work-dependency.md` and `unit-of-work-story-map.md`. Check that every story maps to a unit.
-- [ ] Approve the units and tell the agent: "Stop here. Do not start Construction."
+- [x] Answer the units question file. (15 answers, 5 clarifications in two rounds, plan revised and approved 2026-11-25)
+- [x] Review `application-design/unit-of-work.md`, `unit-of-work-dependency.md` and `unit-of-work-story-map.md`. Check that every story maps to a unit. (36 of 36 mapped; two changes requested and made: the dropped-U7 rule and the AC-5/J2 notes)
+- [x] Approve the units and tell the agent: "Stop here. Do not start Construction." (2026-11-25)
 
 **Done when** all three unit files exist, they are approved, `aidlc-state.md` marks Units Generation complete, and Construction has not started.
 
@@ -94,3 +94,6 @@
 - 2026-11-24: Step 2 done (16 answers, 4 follow-ups all A, plan approved). Step 3 done: stories.md (33 core + 3 video) and personas.md written and approved. Step 4: checkpoint committed; waiting for the context reset.
 - 2026-11-24: Step 4 done: a fresh session resumed at Workflow Planning. Step 5: `execution-plan.md` written (Application Design and Units Generation both EXECUTE; Infrastructure Design SKIP). Waiting for the team's review and approval.
 - 2026-11-24: Step 5 done: execution plan approved. Step 6: checkpoint committed and pushed; waiting for the context reset before Application Design.
+- 2026-11-24 (2026-11-25 UTC): Step 7 done: Application Design plan answered (15 answers, 1 clarification), design files written, two team changes made, then approved. Step 8 done: checkpoint `5346244` committed and pushed, and a fresh session resumed at Units Generation. Step 9 started: wrote `plans/unit-of-work-plan.md` (draft of 7 units, 15 questions). Waiting for the team's answers.
+- 2026-11-25 (UTC): Step 9 in progress. Plan answered (15 answers, 5 clarifications), revised before approval (U1 split into U1a and U1b, AC-4 time limit for U3) and approved. The three unit files are generated (8 units, 36 stories mapped). Waiting for the team to review the story map and approve the units.
+- 2026-11-25 (UTC): Step 9 done. Units approved with R7 confirmed, and the team said "Stop here. Do not start Construction." aidlc-state.md marks Units Generation and Inception complete. Construction not started. Next: Step 10, the final record check.
